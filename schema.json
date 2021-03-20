@@ -1,0 +1,36 @@
+{
+    "Stays":{
+        "groupName": "Smith",
+        "dogs": {
+            "totalNumber": "3",
+            "dog1": {
+                "dogName": "Chewy",
+                "kennelSize":"large",
+                "arrivalDate": "3/16/21",
+                "arrivalTime": "2PM",
+                "releaseDate": "3/19/21",
+                "releaseTime": "6PM",
+                "notes":"Is a huge pain...",
+                "overrides":{
+                    "3/17/21":{
+                        "kennelSize":"medium",
+                        "note":"Another big dog will need this kennel for an hour"
+                    }
+                }
+            },
+
+            "dog2":{"___":"..."}
+        }
+    },
+
+
+
+
+    "Dates":{
+        "3/16":{
+
+        }
+    }
+}
+
+

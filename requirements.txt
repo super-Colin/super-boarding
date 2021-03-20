@@ -1,0 +1,53 @@
+
+CLIENT_NEEDS
+
+Overview of kennels in use and available
+
+Overview of each group of dogs and the length of their stay
+
+Special notes about a dog in any group
+
+Ability to add and edit stays
+
+
+
+
+
+TECHNICAL_NEEDS
+
+Database / Persistant Storage
+Find first available spot for a new stay
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Keep track of kennels in use
+
+
+
+
+
+
+
+
+
+
