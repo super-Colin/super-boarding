@@ -1,8 +1,14 @@
 {
+    "appSettings":{
+
+    },
+
+
     "Stays":{
+        "id": 1,
         "groupName": "Smith",
         "dogs": {
-            "totalNumber": "3",
+            "totalNumber": 3,
             "dog1": {
                 "dogName": "Chewy",
                 "kennelSize":"large",
@@ -11,6 +17,7 @@
                 "releaseDate": "3/19/21",
                 "releaseTime": "6PM",
                 "notes":"Is a huge pain...",
+                "assignedKennel": 1,
                 "overrides":{
                     "3/17/21":{
                         "kennelSize":"medium",
@@ -28,7 +35,23 @@
 
     "Dates":{
         "3/16":{
-
+            "smallAvailable":true,
+            "mediumAvailable":true,
+            "largeAvailable":true,
+            "kennelLarge1":{
+                "groupName": "Smith",
+                "dogName": "Chewbaka"
+            },
+            "kennelLarge2":""
+        },
+        "3/17":{
+            
+        },
+        "3/18":{
+            
+        },
+        "3/19":{
+            
         }
     }
 }
