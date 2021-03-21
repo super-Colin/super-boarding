@@ -21,33 +21,3 @@ Find first available spot for a new stay
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-Keep track of kennels in use
-
-
-
-
-
-
-
-
-
-

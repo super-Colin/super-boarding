@@ -1,13 +1,14 @@
 
 
-let kennelNeeds = {
+const kennelNeeds = {
     "day": "3/16/21",
     "kennelSize":"large",
 
     "group...dog":"Notes..."
 };
-let currentDayInDb = {};
+const currentDayInDb = {};
 
+        // THIS WILL NEED TO BE LOOPED THROUGH FOR EACH DAY IN A NEW RESERVATION
 
 // Check for kennel, create a new version of the day and update the DB with it
 if( checkDayForAvailability(kennelNeeds) ){
@@ -20,8 +21,6 @@ if( checkDayForAvailability(kennelNeeds) ){
 }
 
 
-
-// FETCH DB ENTRY FOR EACH FUNCTION CALL, RETURN A NEW OBJECT
 
 
 function checkDayForAvailability(kennelNeeds:object):boolean {
@@ -43,7 +42,7 @@ function createDayWithReservedKennel( currentDayInDb:object, kennelNeeds: object
 
 // Take in an updated version of the day and update the DB
 function updateDayinDb(currentDayInDb: object, newDayInDb: object){
-    return {"update DB":" doesn't return anything"};
+    return "success or failure message";
 }
 
 
