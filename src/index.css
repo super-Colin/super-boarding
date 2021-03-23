@@ -11,3 +11,12 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+
+.daysOverview_container{
+  display: flex;
+
+}
+.daysOverview_column{
+  margin-right: 5vw;
+}

@@ -4,10 +4,10 @@ const DayColumn = ({stays}) => {
 console.log('DayColumn is receiving:', stays);
 
     return (
-        <div className="dayColumn">
+        <div className="dayColumn_container">
             <h4>Column</h4>
             {stays.map((stay) =>
-            <div key={stay.id}> 
+            <div key={stay.kennelId}> 
                 <DaySingleKennel  kennel={stay} />
             </div>
             )}
