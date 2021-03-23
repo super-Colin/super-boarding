@@ -25,21 +25,21 @@ const dates = [
       {
         "kennelId":1,
         "groupName": "Smith",
-        "dogName": "Chewbaka",
+        "petName": "Chewbaka",
         "kennelSize": "large",
         "notes":"blah blah"
       },
       {
         "kennelId":2,
         "groupName": "Smith",
-        "dogName": "Courage",
+        "petName": "Courage",
         "kennelSize": "small",
         "notes":"blah b"
       },
       {
         "kennelId":3,
         "groupName": "Smith",
-        "dogName": "Pudge",
+        "petName": "Pudge",
         "kennelSize": "medium",
         "notes":"blah blah"
       }
@@ -54,21 +54,21 @@ const dates = [
       {
         "kennelId":1,
         "groupName": "Smith",
-        "dogName": "Chewbaka",
+        "petName": "Chewbaka",
         "kennelSize": "large",
         "notes":"blah blah"
       },
       {
         "kennelId":2,
         "groupName": "Smith",
-        "dogName": "Courage",
+        "petName": "Courage",
         "kennelSize": "small",
         "notes":"blah b"
       },
       {
         "kennelId":3,
         "groupName": "Smith",
-        "dogName": "Pudge",
+        "petName": "Pudge",
         "kennelSize": "medium",
         "notes":"blah blah"
       }
@@ -83,21 +83,21 @@ const dates = [
       {
         "kennelId":1,
         "groupName": "Smith",
-        "dogName": "Chewbaka",
+        "petName": "Chewbaka",
         "kennelSize": "large",
         "notes":"blah blah"
       },
       {
         "kennelId":2,
         "groupName": "Smith",
-        "dogName": "Courage",
+        "petName": "Courage",
         "kennelSize": "small",
         "notes":"blah b"
       },
       {
         "kennelId":3,
         "groupName": "Smith",
-        "dogName": "Pudge",
+        "petName": "Pudge",
         "kennelSize": "medium",
         "notes":"blah blah"
       }
