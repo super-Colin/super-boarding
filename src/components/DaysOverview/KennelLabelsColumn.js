@@ -10,7 +10,7 @@ const KennelLabelsColumn = ({kennelSettings}) => {
         let labels = [];
         let i = 1;
         while(i <= kennelSize.total){
-            labels.push(<div key={i}>{kennelSize.size + " #" + i}</div>);
+            labels.push(<div key={i} className="kennelLabelsColumn_label kennelGrid_height kennelGrid_labelCell" >{kennelSize.size + " #" + i}</div>);
             i++;
         }
         console.log("labels is", labels);
@@ -18,7 +18,8 @@ const KennelLabelsColumn = ({kennelSettings}) => {
     }
 
     return (
-        <div>
+        <div className="kennelLabelsColumn_container" >
+        <h2>Kennel</h2>
             {kennelSettings.kennelSizes.map((kennelSize)=>
                 generateKennelLabels(kennelSize)
             )}

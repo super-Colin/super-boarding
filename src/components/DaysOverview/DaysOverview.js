@@ -14,7 +14,7 @@ const DaysOverview = ({dates, kennelSettings}) => { // Notice that we are destru
             {dates.map((date)=>
                 <div key={date.date} className="daysOverview_column" >
                     <h2>{date.date}</h2>
-                    <DayColumn stays={date.stays} /> 
+                    <DayColumn stays={date.stays} kennelSettings={kennelSettings} /> 
                 </div>
             )}
         </div>

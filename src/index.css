@@ -1,3 +1,10 @@
+*{
+  padding: 0;
+  margin:0;
+  box-sizing: border-box;
+  font-family: inherit;
+}
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
@@ -12,11 +19,47 @@ code {
     monospace;
 }
 
+html{
+  --kennelGrid_box-height: 2rem;
+  --kennelGrid_box-width: 8rem;
+}
+
 
 .daysOverview_container{
   display: flex;
-
+  margin: 3rem 1rem;
 }
 .daysOverview_column{
   margin-right: 5vw;
 }
+
+
+.kennelGrid_labelCell,
+.kennelGrid_cell{
+  background-color: grey;
+  margin: 5px 0;
+  padding: 4px;
+  text-align: center;
+}
+.kennelGrid_cell,
+.kennelGrid_height{
+  height: var(--kennelGrid_box-height);
+}
+.kennelGrid_cell,
+.kennelGrid_width{
+  width: var(--kennelGrid_box-width);
+}
+
+.kennelGrid_labelCell {
+  text-align: left;
+}
+
+
+.kennelLabelsColumn_container{
+
+}
+.kennelLabelsColumn_label{
+  /* height: var(--kennelGrid_box-height); */
+  margin-right: 3vw;
+}
+
