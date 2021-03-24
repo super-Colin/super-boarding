@@ -6,25 +6,35 @@ const AddPetStay = () => {
     const [kennelSize, setKennelSize] = useState('');
     const [petNotes, setPetNotes] = useState('');
 
-    
+
+    const onSubmit = (event)=> {
+        event.preventDefault();
+        let newStay = {};
+        newStay.some = "some";
+        console.log('HELLO FROM SUBMIT FUNC!', newStay)
+    };
+
+
     return (
-        <form id="addStay-form" className="addStay_container" onSubmit="some">
+        <form id="addStay-form" className="addStay_container" onSubmit={onSubmit}>
 
             <div>
                 <label>Pet Name</label>
-                <input id="addStay-petName" name="addStay-petName" type="text" placeholder="Pet Name" />
-            </div>
-
-            <div>
-                <label>Pet Notes</label>
-                <input id="addStay-petNotes" name="addStay-petNotes" type="textarea" placeholder="Pet Notes, Medical or otherwise" />
+                <input type="text" placeholder="Pet Name" value={petName} onChange={(e)=> setPetName(e.target.value)} />
             </div>
 
             <div>
                 <label>Kennel Size</label>
-                <input id="addStay-kennelSize" name="addStay-kennelSize" type="text" placeholder="Pet Name" />
+                <input type="text" placeholder="Pet Name" value={kennelSize} onChange={(e)=> setKennelSize(e.target.value)} />
             </div>
-            
+
+            <div>
+                <label>Pet Notes</label>
+                <input type="textarea" placeholder="Pet Notes, Medical or otherwise" value={petNotes} onChange={(e)=> setPetNotes(e.target.value)} />
+            </div>
+
+            <button formAction="submit">Add Stay</button>
+
         </form>
     )
 }

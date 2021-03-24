@@ -34,19 +34,21 @@ html{
 }
 
 
-.kennelGrid_labelCell,
-.kennelGrid_cell{
-  background-color: grey;
+.kennelGrid_cell,
+.kennelGrid_labelCell{
+  background-color: lightgrey;
   margin: 5px 0;
   padding: 4px;
   text-align: center;
 }
 .kennelGrid_cell,
-.kennelGrid_height{
+.kennelGrid_labelCell,
+.kennelGrid_cell-height{
   height: var(--kennelGrid_box-height);
 }
 .kennelGrid_cell,
-.kennelGrid_width{
+.kennelGrid_labelCell,
+.kennelGrid_cell-width{
   width: var(--kennelGrid_box-width);
 }
 
@@ -58,8 +60,16 @@ html{
 .kennelLabelsColumn_container{
 
 }
-.kennelLabelsColumn_label{
+.kennelGrid_labelCell{
   /* height: var(--kennelGrid_box-height); */
   margin-right: 3vw;
 }
+
+.kennelGrid_cell-vacant{
+  background-color: lightgreen;
+}
+.kennelGrid_cell-occupied{
+  background-color: lightblue;
+}
+
 

@@ -1,37 +1,24 @@
-import DaySingleKennel from "./DaySingleKennel";
+
+const DayColumn = ({staysForDay, kennelSettings}) => {
 
 
-
-
-const DayColumn = ({stays, kennelSettings}) => {
-// console.log('DayColumn is receiving:', stays, stays[0].kennelSize);
-
-const generateKennelStatusesForSize = (stays, kennelSize) => {
-    // console.log("generate statuses from", kennelSize);
+const generateKennelStatusesForSize = (staysForDay, kennelSize) => {
     let statuses = [];
 
-    let relevantStays = stays.filter(stay => stay.kennelSize == kennelSize.size);
-    console.log('relevant stays:', relevantStays);
+    let relevantStays = staysForDay.filter(stay => stay.kennelSize == kennelSize.size);
+    // console.log('relevant stays:', relevantStays);
     let i = 0;
     while(i < kennelSize.total){
-        // console.log('relevant stay [i]:', relevantStays[i]);
         if(relevantStays[i]){
-            console.log('relevant stay [i]:', relevantStays[i]);
-            // statuses.push( <div key={i} className="kennelGrid_height kennelGrid_cell">{relevantStays[i]["petName"]}</div> );
-            statuses.push( <div key={i} className="kennelGrid_height kennelGrid_cell">{relevantStays[i].petName}</div> );
-            // statuses.push( <div key={i} className="kennelGrid_height kennelGrid_cell">{relevantStays[i].petName}</div> );
+            // console.log('relevant stay [i]:', relevantStays[i]);
+            statuses.push( <div key={i} className="kennelGrid_cell kennelGrid_cell-occupied">{relevantStays[i].petName}</div> );
         }else{
-            statuses.push(<div key={i} className="kennelGrid_height kennelGrid_cell" >{kennelSize.size + " #" + (i + 1)}</div>);
+            statuses.push(<div key={i} className="kennelGrid_cell kennelGrid_cell-vacant" >{kennelSize.size + " #" + (i + 1)}</div>);
         }
         i++;
     }
-    // console.log("labels is", statuses);
     return statuses;
 }
-
-
-
-
 
 
     return (
@@ -39,7 +26,7 @@ const generateKennelStatusesForSize = (stays, kennelSize) => {
 
 
             {kennelSettings.kennelSizes.map((kennelSize)=>
-                generateKennelStatusesForSize(stays, kennelSize)
+                generateKennelStatusesForSize(staysForDay, kennelSize)
             )}
 
 

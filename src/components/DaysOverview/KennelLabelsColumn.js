@@ -1,19 +1,19 @@
 
 
 const KennelLabelsColumn = ({kennelSettings}) => {
-    console.log("kennel settings", kennelSettings);
-    console.log("kennel settings ENTRIES", Object.entries(kennelSettings.kennelSizes));
+    // console.log("kennel settings", kennelSettings);
+    // console.log("kennel settings ENTRIES", Object.entries(kennelSettings.kennelSizes));
 
 
     const generateKennelLabels = kennelSize => {
-        console.log("generate from", kennelSize);
+        // console.log("generate from", kennelSize);
         let labels = [];
-        let i = 1;
-        while(i <= kennelSize.total){
-            labels.push(<div key={i} className="kennelLabelsColumn_label kennelGrid_height kennelGrid_labelCell" >{kennelSize.size + " #" + i}</div>);
+        let i = 0;
+        while(i < kennelSize.total){
+            labels.push(<div key={i} className="kennelGrid_labelCell" >{kennelSize.size + " #" + (i + 1)}</div>);
             i++;
         }
-        console.log("labels is", labels);
+        // console.log("labels is", labels);
         return labels;
     }
 
