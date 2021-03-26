@@ -13,9 +13,49 @@ const kennelSettings = {
     {"size":"large", "total": 6}
   ]
 }
+const stays = [
+  {
+    "groupName": "Smith",
+    "pets":[
+      {
+        "petName": "Chewbaka",
+        "kennelSize": "large",
+        "note":"He's a big boi",
+        "arrivalDate":"3/16/21",
+        "arrivalTime":"5:30PM",
+        "releaseDate":"3/18/21",
+        "releaseTime":"4:00PM",
+        "overrides":[
+          {
+            // Probably should add another css class for a different color on any overridden cells
+            "date":"3/17/21",
+            "allDayStay":"true", // if this is an allDay we don't need an arrival and release time; try to loop around them
+            "kennelSize":"medium",
+            "overrideNote":"Needs to move to a medium kennel for a bit"
+          }
+        ]
+      }
+    ],
+  }
+];
+const generateDatesFromStay= (stay)=>{};
 
+const filterRelevantStaysForDate = (stays, date)=>{
+  let relevantStays = {};
+  return relevantStays;
+};
 
-// const dates = [
+const CheckIfReservationCanBeMadeOnDate = (date, kennelSizeRequired)=>{
+  let kennelAvailable = true;
+  return kennelAvailable;
+
+};
+const generateDateFromRelevantStays = (relevantStays)=>{
+  let newDate = {};
+  return newDate;
+};
+
+//I'm thinking these should be generated from the stays
 const [dates,setDate] =useState( 
   [
   {
@@ -23,9 +63,12 @@ const [dates,setDate] =useState(
     "smallAvailable":true,
     "mediumAvailable":true,
     "largeAvailable":true,
-    "stays":[
+    "kennelReservations":[
       {
         "kennelId":1,
+        "allDayStay":true,
+        "arrivalTime":"",
+        "releaseTime":"",
         "groupName": "Smith",
         "petName": "Chewbaka",
         "kennelSize": "large",
@@ -33,6 +76,9 @@ const [dates,setDate] =useState(
       },
       {
         "kennelId":2,
+        "allDayStay":true,
+        "arrivalTime":"",
+        "releaseTime":"",
         "groupName": "Smith",
         "petName": "Courage",
         "kennelSize": "small",
@@ -40,6 +86,9 @@ const [dates,setDate] =useState(
       },
       {
         "kennelId":3,
+        "allDayStay":true,
+        "arrivalTime":"",
+        "releaseTime":"",
         "groupName": "Smith",
         "petName": "Pudge",
         "kennelSize": "medium",
@@ -52,7 +101,7 @@ const [dates,setDate] =useState(
     "smallAvailable":true,
     "mediumAvailable":true,
     "largeAvailable":true,
-    "stays":[
+    "kennelReservations":[
       {
         "kennelId":1,
         "groupName": "Smith",
@@ -74,7 +123,7 @@ const [dates,setDate] =useState(
     "smallAvailable":true,
     "mediumAvailable":true,
     "largeAvailable":true,
-    "stays":[
+    "kennelReservations":[
       {
         "kennelId":1,
         "groupName": "Smith",
@@ -95,44 +144,15 @@ const [dates,setDate] =useState(
   ]
 )
 
-const createNewDate = (date, stays)=>{
-  let newDate = {
-    "date": date,
-    "smallAvailable":true,
-    "mediumAvailable":true,
-    "largeAvailable":true,
-    "stays":[...stays]
-  };
-  return newDate;
-}
 
-const addStay = (dateStays, newStay, kennelSettings)=>{
-  let requiredSize = newStay.kennelSize;
-  // let requiredSize = '';
-  checkIfKennelSizeAvailable( dateStays, requiredSize, kennelSettings)
-  let updatedStays = [...dateStays, newStay];
-  return updatedStays;
-}
 
-const checkIfKennelSizeAvailable = (dateStays, kennelSizeRequired, kennelSettings) =>{
-  let maxOfRequiredKennelSize;
-  let i =0;
-  while( i < kennelSettings.kennelSizes.length ){
-    console.log('check if kennel size:', i , kennelSettings.kennelSizes[i]);
-    if(kennelSettings.kennelSizes[i].size == kennelSizeRequired){
-      maxOfRequiredKennelSize = kennelSettings.kennelSizes[i].total;
-      break;
-    }
-    i++;
-  }
-  console.log('check kennel size, max is:' , maxOfRequiredKennelSize);
-}
 
   return (
     <div className="App">
-      <AddPetStay />
+      {/* <AddPetStay/> */}
       {/* {console.log('top level dates:', dates)} */}
-      <DaysOverview dates={dates} kennelSettings={kennelSettings} />
+      {/* <DaysOverview dates={dates} kennelSettings={kennelSettings} /> */}
+      
     </div>
   );
 

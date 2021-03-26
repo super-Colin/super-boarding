@@ -1,6 +1,6 @@
 import {useState} from 'react';
 
-const AddPetStay = () => {
+const AddPetStay = ({onAdd}) => {
 
     const [petName, setPetName] = useState('');
     const [kennelSize, setKennelSize] = useState('');
@@ -9,9 +9,17 @@ const AddPetStay = () => {
 
     const onSubmit = (event)=> {
         event.preventDefault();
-        let newStay = {};
+        // let newStay = {};
+        let newStay = {
+            // "kennelId":3,
+            "groupName": "Smith",
+            "petName": "Pudge",
+            "kennelSize": "medium",
+            "notes":"blah blah"
+        };
         newStay.some = "some";
         console.log('HELLO FROM SUBMIT FUNC!', newStay)
+        onAdd();
     };
 
 

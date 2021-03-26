@@ -13,6 +13,9 @@ const kennelSettings = {
     {"size":"large", "total": 6}
   ]
 }
+const stays = [
+  {}
+];
 
 
 // const dates = [
@@ -106,11 +109,11 @@ const createNewDate = (date, stays)=>{
   return newDate;
 }
 
-const addStay = (dateStays, newStay, kennelSettings)=>{
+const addStay = (date, newStay, kennelSettings)=>{
   let requiredSize = newStay.kennelSize;
   // let requiredSize = '';
-  checkIfKennelSizeAvailable( dateStays, requiredSize, kennelSettings)
-  let updatedStays = [...dateStays, newStay];
+  checkIfKennelSizeAvailable( date.stays, requiredSize, kennelSettings)
+  let updatedStays = [...date.stays, newStay];
   return updatedStays;
 }
 
@@ -126,11 +129,12 @@ const checkIfKennelSizeAvailable = (dateStays, kennelSizeRequired, kennelSetting
     i++;
   }
   console.log('check kennel size, max is:' , maxOfRequiredKennelSize);
+  
 }
 
   return (
     <div className="App">
-      <AddPetStay />
+      <AddPetStay onAdd={addStay} />
       {/* {console.log('top level dates:', dates)} */}
       <DaysOverview dates={dates} kennelSettings={kennelSettings} />
     </div>

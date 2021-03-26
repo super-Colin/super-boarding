@@ -24,7 +24,6 @@ html{
   --kennelGrid_box-width: 8rem;
 }
 
-
 .daysOverview_container{
   display: flex;
   margin: 3rem 1rem;
@@ -32,7 +31,6 @@ html{
 .daysOverview_column{
   margin-right: 5vw;
 }
-
 
 .kennelGrid_cell,
 .kennelGrid_labelCell{
@@ -56,20 +54,9 @@ html{
   text-align: left;
 }
 
-
-.kennelLabelsColumn_container{
-
-}
 .kennelGrid_labelCell{
-  /* height: var(--kennelGrid_box-height); */
   margin-right: 3vw;
 }
 
-.kennelGrid_cell-vacant{
-  background-color: lightgreen;
-}
-.kennelGrid_cell-occupied{
-  background-color: lightblue;
-}
-
-
+.kennelGrid_cell-vacant{background-color: lightgreen;}
+.kennelGrid_cell-occupied{background-color: lightblue;}

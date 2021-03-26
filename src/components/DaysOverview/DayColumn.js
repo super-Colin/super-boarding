@@ -4,6 +4,7 @@ const DayColumn = ({staysForDay, kennelSettings}) => {
 
 const generateKennelStatusesForSize = (staysForDay, kennelSize) => {
     let statuses = [];
+    console.log("staysForDay", staysForDay);
 
     let relevantStays = staysForDay.filter(stay => stay.kennelSize == kennelSize.size);
     // console.log('relevant stays:', relevantStays);
@@ -28,6 +29,7 @@ const generateKennelStatusesForSize = (staysForDay, kennelSize) => {
             {kennelSettings.kennelSizes.map((kennelSize)=>
                 generateKennelStatusesForSize(staysForDay, kennelSize)
             )}
+            {/* <p>sucks..</p> */}
 
 
         </div>
