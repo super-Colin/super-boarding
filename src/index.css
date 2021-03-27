@@ -24,6 +24,10 @@ html{
   --kennelGrid_box-width: 8rem;
 }
 
+.invalidInput{
+  border: 2px solid red;
+}
+
 .daysOverview_container{
   display: flex;
   margin: 3rem 1rem;
