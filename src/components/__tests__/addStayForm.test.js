@@ -1,18 +1,24 @@
-import {screen, render, cleanup} from '@testing-library/react';
+import {screen, render} from '@testing-library/react';
 // import renderer from 'react-test-renderer';
-import AddStayForm from '../AddStayForm';
 import '@testing-library/jest-dom';
+import AddStayForm from '../AddStayForm';
 
-
-afterEach(()=>{
-    cleanup();
-})
 
 test('See if AddStayForm exists',()=>{
     render(<AddStayForm />);
-    // const form = document.querySelector('.addStayForm_container');
-    const form = screen.getByTestId("1");
-    // expect(screen).toHaveTextContent('Arrival Date');
+    const form = document.querySelector('.addStayForm_container');
     expect(form).toBeInTheDocument();
-    
+    expect(form).toHaveTextContent('Add Stay');
 });
+
+test('Check that AddStayForm has approriate inputs', ()=>{
+    render(<AddStayForm />);
+    const nameInput = screen.getByLabelText('Pet Name');
+    const arrivalDateInput = screen.getByLabelText('Arrival Date');
+    const arrivalTimeInput = screen.getByLabelText('Arrival Time');
+    const releaseDateInput = screen.getByLabelText('Release Date');
+    const releaseTimeInput = screen.getByLabelText('Release Time');
+    const notesInput = screen.getByLabelText('Pet Notes');
+    const formSubmitButton = screen.getByText('Submit');
+});
+
