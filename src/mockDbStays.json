@@ -1,0 +1,41 @@
+[{
+        "groupName": "basic",
+        "pets": [{
+                "petName": "basic",
+                "kennelSize": "medium",
+                "note": "Just a test pupper",
+                "arrivalDate": "2021-03-27T00:25:36.489Z",
+                "releaseDate": "2021-03-27T01:25:36.489Z",
+                "singleDayStay": true
+            },
+            {
+                "petName": "basic",
+                "kennelSize": "medium",
+                "note": "Just a test pupper",
+                "arrivalDate": "2021-03-27T00:25:36.489Z",
+                "releaseDate": "2021-03-27T01:25:36.489Z",
+                "singleDayStay": true
+            }
+        ]
+    },
+    {
+        "groupName": "Smith",
+        "pets": [{
+            "petName": "Chewbaka",
+            "kennelSize": "large",
+            "note": "He's a big boi",
+            "arrivalDate": "3/16/21",
+            "arrivalTime": "5:30PM",
+            "releaseDate": "3/18/21",
+            "releaseTime": "4:00PM",
+            "overrides": [{
+                "date": "3/17/21",
+                "allDayStay": "true",
+                "arrivalTime": "",
+                "releaseTime": "",
+                "kennelSize": "medium",
+                "overrideNote": "Needs to move to a medium kennel for a bit"
+            }]
+        }]
+    }
+]

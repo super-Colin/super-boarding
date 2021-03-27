@@ -1,0 +1,15 @@
+{
+    "kennelSizes": [{
+            "size": "small",
+            "total": 6
+        },
+        {
+            "size": "medium",
+            "total": 6
+        },
+        {
+            "size": "large",
+            "total": 6
+        }
+    ]
+}

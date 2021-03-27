@@ -1,0 +1,80 @@
+[{
+        "date": "3/16/21",
+        "smallAvailable": true,
+        "mediumAvailable": true,
+        "largeAvailable": true,
+        "kennelReservations": [{
+                "kennelId": 1,
+                "allDayStay": true,
+                "arrivalTime": "",
+                "releaseTime": "",
+                "groupName": "Smith",
+                "petName": "Chewbaka",
+                "kennelSize": "large",
+                "notes": "blah blah"
+            },
+            {
+                "kennelId": 2,
+                "allDayStay": true,
+                "arrivalTime": "",
+                "releaseTime": "",
+                "groupName": "Smith",
+                "petName": "Courage",
+                "kennelSize": "small",
+                "notes": "blah b"
+            },
+            {
+                "kennelId": 3,
+                "allDayStay": true,
+                "arrivalTime": "",
+                "releaseTime": "",
+                "groupName": "Smith",
+                "petName": "Pudge",
+                "kennelSize": "medium",
+                "notes": "blah blah"
+            }
+        ]
+    },
+    {
+        "date": "3/17/21",
+        "smallAvailable": true,
+        "mediumAvailable": true,
+        "largeAvailable": true,
+        "kennelReservations": [{
+                "kennelId": 1,
+                "groupName": "Smith",
+                "petName": "Chewbaka",
+                "kennelSize": "large",
+                "notes": "blah blah"
+            },
+            {
+                "kennelId": 3,
+                "groupName": "Smith",
+                "petName": "Pudge",
+                "kennelSize": "medium",
+                "notes": "blah blah"
+            }
+        ]
+    },
+    {
+        "date": "3/18/21",
+        "smallAvailable": true,
+        "mediumAvailable": true,
+        "largeAvailable": true,
+        "kennelReservations": [{
+                "kennelId": 1,
+                "groupName": "Smith",
+                "petName": "Chewbaka",
+                "kennelSize": "large",
+                "notes": "blah blah"
+            },
+            {
+                "kennelId": 2,
+                "groupName": "Smith",
+                "petName": "Courage",
+                "kennelSize": "small",
+                "notes": "blah b"
+            }
+        ]
+    }
+]
