@@ -48,7 +48,16 @@ describe('Suite of tests for the AddStayForm component',()=>{
             i++;
         });
         dateInputs.map( input =>{
-            
+            // userEvent.type(input, `032${i}2021`);
+            // console.log('input value is ');
+            // console.log(input.value);
+            // expect(input).toHaveValue(`2021-03-2${i}`);
+            // i++;
+        });
+        timeInputs.map( input => {
+            userEvent.type(input, `0315p`);
+            expect(input).toHaveValue(`03:15`);
+            i++;
         });
         // userEvent.type(nameInput, "Mr. Kitty");
         // expect(nameInput).toHaveValue('Mr. Kitty');
