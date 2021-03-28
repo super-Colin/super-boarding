@@ -11,7 +11,6 @@ const AddStayForm = () => {
     const [kennelSize,setKennelSize] = useState('');
 
 
-
     const setInputInvalid = (elem)=>{
         elem.classList.add('invalidInput');
         elem.setAttribute("isvalid", "false");
@@ -20,7 +19,6 @@ const AddStayForm = () => {
         elem.classList.remove('invalidInput');
         elem.setAttribute("isvalid", "true")
     }
-
     const nameValidation = (elem, elemNameState, nameMinLength)=>{
         if(elemNameState.length < nameMinLength){
             setInputInvalid(elem);
@@ -45,7 +43,6 @@ const AddStayForm = () => {
             return 'valid';
         }
     }
-
     const validateAll = (e)=>{
         
         let errors = [];
@@ -66,7 +63,7 @@ const AddStayForm = () => {
         const date1 = new Date(dateString1);
         const date2 = new Date(dateString2);
         // We are assuming that there will never be a stay that ends on the same day and month of another year
-        if(date1.getDay() === date2.getDay() && date1.getMonth() === date2.getMonth() ){
+        if(date1.getDate() === date2.getDate() && date1.getMonth() === date2.getMonth() ){
             return true;
         }
         return false

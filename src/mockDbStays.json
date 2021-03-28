@@ -1,4 +1,12 @@
 [{
+        "__COMMENT__":"This group should maybe go at the bottom? Not sure where it will be in the way less",
+        "groupName": "maintenance",
+        "dates": [{
+            "date": "4/17/21",
+            "note": "something needs to be cleaned"
+        }]
+    },
+    {
         "groupName": "basic",
         "pets": [{
                 "petName": "basic",
