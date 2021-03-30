@@ -85,7 +85,7 @@ const AddStayForm = ({passNewGroupStayUpScope}) => {
         petsInStay.push(petDetails);
 
         const ouputJSON = {
-        "groupName": "basic",
+        "groupName": groupName,
         "pets": petsInStay
         }
 

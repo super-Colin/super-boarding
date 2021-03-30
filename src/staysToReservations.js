@@ -55,6 +55,7 @@ function callbackLoopThroughDays(startDateString, endDateString, callback, args)
     }
 };
 function checkForKennelSizeAvailability(dateString, kennelSize){console.log("didn't check if kennel was available...")};
+// ^^^  THIS WILL NEED TO RETURN A KENNEL ID FOR THE RESERVATION
 
 function setDateHoursToZero(dateString){
     let theDate = new Date(dateString);
@@ -63,25 +64,17 @@ function setDateHoursToZero(dateString){
 }
 
 
-function createReservationForDay(petStayDetails, dateString){
+function createPetReservationForDay(petStayDetails, dateString){
     let [allDayStay, arrivingToday, releasingToday] = [false, false, false];
     let [arrivalTime, releaseTime] = [petStayDetails["arrivalTime"], petStayDetails["releaseTime"]];
     // let allDayStay = false;
     // let arrivingToday = false;
     // let releasingToday = false;
     let reservationForDay = {};
-    reservationForDay = {
-        "petName": "basic",
-        "kennelSize": "medium",
-        "note": "Just a test pupper",
-        "arrivalDate": "2021-03-27T00:25:36.489Z",
-        "arrivalTime": "2021-03-27T00:25:36.489Z",
-        "releaseDate": "2021-03-27T01:25:36.489Z",
-        "releaseTime": "2021-03-27T01:25:36.489Z",
-    };
 
     // checkForKennelSizeAvailability(workingDateString, petStayDetails["kennelSize"]);
-    const workingDate = setDateHoursToZero(workingDateString);
+    // ^^^  THIS WILL NEED TO RETURN A KENNEL ID FOR THE RESERVATION
+    const workingDate = setDateHoursToZero(dateString);
     
     const arrivalDate = setDateHoursToZero(petStayDetails["arivalDate"]);
     const releaseDate = setDateHoursToZero(petStayDetails["releaseDate"]);
@@ -99,25 +92,33 @@ function createReservationForDay(petStayDetails, dateString){
     }
 
     reservationForDay  = {
-        // "kennelId": 1,
+        "kennelId": 1,
+        "kennelSize": petStayDetails["kennelSize"],
+        "groupName": petStayDetails["groupName"],
+        "petName": petStayDetails["petName"],
         "allDayStay": allDayStay,
         "arrivingToday":arrivingToday,
         "releasingToday":releasingToday,
         "arrivalTime": arrivalTime,
         "releaseTime": releaseTime,
-        "groupName": petStayDetails["groupName"],
-        "petName": petStayDetails["petName"],
-        "kennelSize": petStayDetails["kennelSize"],
         "notes": petStayDetails["notes"]
     }
     return reservationForDay;
 }
 
-
-
-function updateKennelReservationsInDb(){};
-
-function convertGroupStayToReservations(groupStay){
+// function convertGroupStayToReservations(groupStay){
+//     let datesReservations = [];
+//     allStays.map((group)=>{
+//         let groupReservations = [];
+//         group["pets"].map((petStay)=>{
+//             // add middleware functions for processing pet stays here
+//             // checkForFullAvailability();
+//             callbackLoopThroughDays(createPetReservationForDay, );
+//         });
+//     });
+//     return datesReservations;
+// }
+function createGroupReservation(groupStay){
     let datesReservations = [];
 
 
@@ -126,7 +127,7 @@ function convertGroupStayToReservations(groupStay){
         group["pets"].map((petStay)=>{
             // add middleware functions for processing pet stays here
             // checkForFullAvailability();
-            callbackLoopThroughDays(createReservationForDay, );
+            callbackLoopThroughDays(createPetReservationForDay, );
         });
 
     });
@@ -134,6 +135,13 @@ function convertGroupStayToReservations(groupStay){
 
     return datesReservations;
 }
+
+
+
+
+
+
+
 let MOCKoutput = {
         "date": "3/16/21",
         "smallAvailable": true,

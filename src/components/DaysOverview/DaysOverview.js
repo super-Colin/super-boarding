@@ -1,0 +1,19 @@
+import DayOverview from './DayOverview';
+
+const DaysOverview = ({reservations}) => {
+    console.log('days here', reservations);
+
+
+    return (
+        <div>
+            {
+                reservations.map((reservationsForDay)=>{
+                    return <DayOverview key={reservationsForDay.date} reservationsForDay={reservationsForDay} />
+                })
+            }
+            
+        </div>
+    )
+}
+
+export default DaysOverview

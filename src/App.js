@@ -1,15 +1,18 @@
 import {useState} from 'react';
 import AddStayForm from './components/AddStayForm';
+import DaysOverview from './components/DaysOverview/DaysOverview';
 
 // Mock Database
 import settings from './mockDbSettings.json';
 import stays from './mockDbStays.json';
+import reservations from './mockDbReservations.json'
 
 function App() {
-console.log('settings:', settings);
-console.log('stay', stays);
+// console.log('settings:', settings);
+// console.log('stay', stays);
+console.log('reserves', reservations);
 
-  const [currentDateReservation, setCurrentDateReservation] = useState({});
+  const [dateReservations, setdateReservations] = useState(reservations);
 
   const [currentStayDetails, setCurrentStayDetails] = useState({
     "groupName":"",
@@ -36,7 +39,7 @@ console.log('stay', stays);
   return (
     <div className="App">
       <AddStayForm passNewGroupStayUpScope={setCurrentStayDetails} />
-
+      <DaysOverview reservations={reservations} />
     </div>
   );
 

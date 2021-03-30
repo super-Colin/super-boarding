@@ -1,37 +1,50 @@
-[{
+[
+    {
         "date": "3/16/21",
         "smallAvailable": true,
         "mediumAvailable": true,
         "largeAvailable": true,
         "kennelReservations": [{
+                "kennelSize": "large",
                 "kennelId": 1,
-                "allDayStay": true,
-                "arrivalTime": "",
-                "releaseTime": "",
                 "groupName": "Smith",
                 "petName": "Chewbaka",
-                "kennelSize": "large",
-                "notes": "blah blah"
+                "notes": "blah blah",
+                "allDayStay": false,
+                "arrivingToday":true,
+                "releasingToday":false,
+                "arrivalTime": "00:53",
+                "releaseTime": "12:30",
+                "arrivalDate": "2021-03-16",
+                "releaseDate": "2021-04-19"
             },
             {
+                "kennelSize": "medium",
                 "kennelId": 2,
-                "allDayStay": true,
-                "arrivalTime": "",
-                "releaseTime": "",
-                "groupName": "Smith",
-                "petName": "Courage",
-                "kennelSize": "small",
-                "notes": "blah b"
-            },
-            {
-                "kennelId": 3,
-                "allDayStay": true,
-                "arrivalTime": "",
-                "releaseTime": "",
                 "groupName": "Smith",
                 "petName": "Pudge",
-                "kennelSize": "medium",
-                "notes": "blah blah"
+                "notes": "Also blah blah",
+                "allDayStay": false,
+                "arrivingToday":false,
+                "releasingToday":true,
+                "arrivalTime": "00:53",
+                "releaseTime": "12:30",
+                "arrivalDate": "2021-03-15",
+                "releaseDate": "2021-03-16"
+            },
+            {
+                "kennelSize": "small",
+                "kennelId": 1,
+                "groupName": "Smith",
+                "petName": "Courage",
+                "notes": "blah",
+                "allDayStay": true,
+                "arrivingToday":false,
+                "releasingToday":false,
+                "arrivalTime": "00:53",
+                "releaseTime": "12:30",
+                "arrivalDate": "2021-03-15",
+                "releaseDate": "2021-03-16"
             }
         ]
     },
@@ -41,18 +54,46 @@
         "mediumAvailable": true,
         "largeAvailable": true,
         "kennelReservations": [{
+                "kennelSize": "large",
                 "kennelId": 1,
                 "groupName": "Smith",
                 "petName": "Chewbaka",
-                "kennelSize": "large",
-                "notes": "blah blah"
+                "notes": "blah blah",
+                "allDayStay": true,
+                "arrivingToday":false,
+                "releasingToday":false,
+                "arrivalTime": "00:53",
+                "releaseTime": "12:30",
+                "arrivalDate": "2021-03-16",
+                "releaseDate": "2021-04-19"
             },
             {
-                "kennelId": 3,
+                "kennelSize": "medium",
+                "kennelId": 2,
                 "groupName": "Smith",
                 "petName": "Pudge",
-                "kennelSize": "medium",
-                "notes": "blah blah"
+                "notes": "Also blah blah",
+                "allDayStay": false,
+                "arrivingToday":false,
+                "releasingToday":true,
+                "arrivalTime": "00:53",
+                "releaseTime": "12:30",
+                "arrivalDate": "2021-03-15",
+                "releaseDate": "2021-03-16"
+            },
+            {
+                "kennelSize": "small",
+                "kennelId": 1,
+                "groupName": "Smith",
+                "petName": "Courage",
+                "notes": "blah",
+                "allDayStay": true,
+                "arrivingToday":false,
+                "releasingToday":false,
+                "arrivalTime": "00:53",
+                "releaseTime": "12:30",
+                "arrivalDate": "2021-03-15",
+                "releaseDate": "2021-03-16"
             }
         ]
     },
@@ -62,18 +103,46 @@
         "mediumAvailable": true,
         "largeAvailable": true,
         "kennelReservations": [{
+                "kennelSize": "large",
                 "kennelId": 1,
                 "groupName": "Smith",
                 "petName": "Chewbaka",
-                "kennelSize": "large",
-                "notes": "blah blah"
+                "notes": "blah blah",
+                "allDayStay": false,
+                "arrivingToday":true,
+                "releasingToday":false,
+                "arrivalTime": "00:53",
+                "releaseTime": "12:30",
+                "arrivalDate": "2021-03-16",
+                "releaseDate": "2021-04-19"
             },
             {
+                "kennelSize": "medium",
                 "kennelId": 2,
                 "groupName": "Smith",
-                "petName": "Courage",
+                "petName": "Pudge",
+                "notes": "Also blah blah",
+                "allDayStay": false,
+                "arrivingToday":false,
+                "releasingToday":true,
+                "arrivalTime": "00:53",
+                "releaseTime": "12:30",
+                "arrivalDate": "2021-03-15",
+                "releaseDate": "2021-03-16"
+            },
+            {
                 "kennelSize": "small",
-                "notes": "blah b"
+                "kennelId": 1,
+                "groupName": "Smith",
+                "petName": "Courage",
+                "notes": "blah",
+                "allDayStay": true,
+                "arrivingToday":false,
+                "releasingToday":false,
+                "arrivalTime": "00:53",
+                "releaseTime": "12:30",
+                "arrivalDate": "2021-03-15",
+                "releaseDate": "2021-03-16"
             }
         ]
     }
