@@ -13,7 +13,9 @@
                 "kennelSize": "medium",
                 "note": "Just a test pupper",
                 "arrivalDate": "2021-03-27T00:25:36.489Z",
+                "arrivalTime": "2021-03-27T00:25:36.489Z",
                 "releaseDate": "2021-03-27T01:25:36.489Z",
+                "releaseTime": "2021-03-27T01:25:36.489Z",
                 "singleDayStay": true
             },
             {
@@ -21,7 +23,9 @@
                 "kennelSize": "medium",
                 "note": "Just a test pupper",
                 "arrivalDate": "2021-03-27T00:25:36.489Z",
+                "arrivalTime": "2021-03-27T00:25:36.489Z",
                 "releaseDate": "2021-03-27T01:25:36.489Z",
+                "releaseTime": "2021-03-27T01:25:36.489Z",
                 "singleDayStay": true
             }
         ]

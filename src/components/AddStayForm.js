@@ -1,6 +1,6 @@
 import {useState} from 'react';
 
-const AddStayForm = () => {
+const AddStayForm = ({passNewGroupStayUpScope}) => {
     const [groupName, setGroupName]= useState('');
     const [petName, setPetName]= useState('');
     const [arrivalDate, setArrivalDate] = useState('');
@@ -31,7 +31,6 @@ const AddStayForm = () => {
     const groupNameValidation = ()=>{
         let groupNameElem = document.getElementById('addStay-groupName');
         nameValidation(groupNameElem, groupName, 4)
-        
     }
     const petNameValidation = ()=>{
         let petNameElem = document.getElementById('addStay-petName');
@@ -58,7 +57,6 @@ const AddStayForm = () => {
         // console.log('pet name length is', petName.length);
         // console.log('arrival date is', arrivalDate);
     }
-
     const areDatesSameDay = (dateString1, dateString2) =>{
         const date1 = new Date(dateString1);
         const date2 = new Date(dateString2);
@@ -70,7 +68,7 @@ const AddStayForm = () => {
     }
 
 
-    const submitHandler = (e)=>{
+    const addStaySubmitHandler = (e)=>{
         e.preventDefault();
         const petsInStay = [];
 
@@ -92,12 +90,12 @@ const AddStayForm = () => {
         }
 
         console.log(ouputJSON);
+        // return ouputJSON;
+        passNewGroupStayUpScope(ouputJSON);
     }
 
-
-
     return (
-        <form className="addStayForm_container" onSubmit={submitHandler}>
+        <form className="addStayForm_container" onSubmit={addStaySubmitHandler}>
             <h1>Add Stay</h1>
             
             <div className="addStayForm_inputWrapper">
