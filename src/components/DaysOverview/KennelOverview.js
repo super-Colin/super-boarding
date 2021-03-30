@@ -1,8 +1,12 @@
 
-const KennelOverview = ({reservation}) => {
+const KennelOverview = ({reservation, kennelKey}) => {
     return (
         <div>
-            {reservation["petName"]}
+            <p>Group:{reservation.groupName}</p>
+            <p>Pet:{reservation.petName}</p>
+            <p>Kennel: {kennelKey}</p>
+            <p>Notes:{reservation.notes}</p>
+            <br />
         </div>
     )
 }

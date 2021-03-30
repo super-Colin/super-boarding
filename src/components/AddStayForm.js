@@ -1,14 +1,14 @@
 import {useState} from 'react';
 
 const AddStayForm = ({passNewGroupStayUpScope}) => {
-    const [groupName, setGroupName]= useState('');
-    const [petName, setPetName]= useState('');
-    const [arrivalDate, setArrivalDate] = useState('');
-    const [arrivalTime, setArrivalTime] = useState('');
-    const [releaseDate, setReleaseDate] = useState('');
-    const [releaseTime, setReleaseTime] = useState('');
-    const [petNotes,setPetNotes] = useState('');
-    const [kennelSize,setKennelSize] = useState('');
+    const [groupName, setGroupName]= useState('Group from form');
+    const [petName, setPetName]= useState('Mr. Kitty');
+    const [arrivalDate, setArrivalDate] = useState('2021-03-16');
+    const [arrivalTime, setArrivalTime] = useState('09:15');
+    const [releaseDate, setReleaseDate] = useState('2021-03-19');
+    const [releaseTime, setReleaseTime] = useState('17:00');
+    const [petNotes,setPetNotes] = useState('heres some notes');
+    const [kennelSize,setKennelSize] = useState('medium');
 
 
     const setInputInvalid = (elem)=>{
@@ -75,7 +75,7 @@ const AddStayForm = ({passNewGroupStayUpScope}) => {
         const petDetails = {
             "petName": petName,
             "kennelSize": kennelSize,
-            "note": petNotes,
+            "notes": petNotes,
             "arrivalDate": arrivalDate,
             "arrivalTime": arrivalTime,
             "releaseDate": releaseDate,

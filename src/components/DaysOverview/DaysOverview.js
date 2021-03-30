@@ -6,6 +6,7 @@ const DaysOverview = ({reservations}) => {
 
     return (
         <div>
+            <h1>Days:</h1>
             {
                 reservations.map((reservationsForDay)=>{
                     return <DayOverview key={reservationsForDay.date} reservationsForDay={reservationsForDay} />

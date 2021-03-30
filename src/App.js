@@ -1,6 +1,7 @@
 import {useState} from 'react';
 import AddStayForm from './components/AddStayForm';
 import DaysOverview from './components/DaysOverview/DaysOverview';
+import CurrentStayInfo from './components/CurrentStayInfo';
 
 // Mock Database
 import settings from './mockDbSettings.json';
@@ -15,31 +16,44 @@ console.log('reserves', reservations);
   const [dateReservations, setdateReservations] = useState(reservations);
 
   const [currentStayDetails, setCurrentStayDetails] = useState({
-    "groupName":"",
-    "groupNotes":"",
+    "groupName":"useState groupName outer",
+    "groupNotes":"Some group notes",
     "pets":[
       {
-        "groupName":"",
-        "petName":"",
-        "kennelSize":"",
+        "groupName":"useState groupName inner",
+        "petName":"useState Mr. Kitty",
+        "kennelSize":"medium",
         "arrivalDate":"",
-        "arrivalTime":"",
+        "arrivalTime":"09:15",
         "releaseDate":"",
-        "releaseTime":"",
-        "note":""
+        "releaseTime":"17:00",
+        "notes":"Her name is Mr. Kitty"
       }
     ]
   });
 
+const addNewStayToReservations = ( newStay, currentReservations) =>{
+  console.log('adding stay to reservations:', newStay)
+  
+  setCurrentStayDetails(newStay);
+}
 
+const updateCurrentStay = (newStay)=>{
+  //Check vailidity?? Should be good though right?
 
+}
 
+// const updateReservations
 
 
   return (
     <div className="App">
+
+                                            {/* Maybe pass this into some kind of vaildation before setState() */}
       <AddStayForm passNewGroupStayUpScope={setCurrentStayDetails} />
-      <DaysOverview reservations={reservations} />
+      <CurrentStayInfo currentStayDetails={currentStayDetails} />
+      <DaysOverview reservations={dateReservations} />
+      
     </div>
   );
 
