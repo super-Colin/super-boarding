@@ -42,21 +42,7 @@ const AddStayForm = ({passNewGroupStayUpScope}) => {
             return 'valid';
         }
     }
-    const validateAll = (e)=>{
-        
-        let errors = [];
 
-        const groupNameElem = document.getElementById('addStay-groupName');
-        const petNameElem = document.getElementById('addStay-petName');
-        errors.push( nameValidation(groupNameElem, groupName, 4) );
-        errors.push( nameValidation(petNameElem, petName, 2) );
-        
-        // console.log('form input is:', e)
-        // console.log('group name is', groupName);
-        // console.log('pet name is', petName);
-        // console.log('pet name length is', petName.length);
-        // console.log('arrival date is', arrivalDate);
-    }
     const areDatesSameDay = (dateString1, dateString2) =>{
         const date1 = new Date(dateString1);
         const date2 = new Date(dateString2);
@@ -76,9 +62,9 @@ const AddStayForm = ({passNewGroupStayUpScope}) => {
             "petName": petName,
             "kennelSize": kennelSize,
             "notes": petNotes,
-            "arrivalDate": arrivalDate,
+            "arrivalDate": arrivalDate.replace(/-/g, '/'),
             "arrivalTime": arrivalTime,
-            "releaseDate": releaseDate,
+            "releaseDate": releaseDate.replace(/-/g, '/'),
             "releaseTime": releaseTime,
             "singleDayStay": areDatesSameDay(arrivalDate, releaseDate)
         }
@@ -89,7 +75,7 @@ const AddStayForm = ({passNewGroupStayUpScope}) => {
         "pets": petsInStay
         }
 
-        console.log(ouputJSON);
+        console.log('addForm is passing up:', ouputJSON);
         // return ouputJSON;
         passNewGroupStayUpScope(ouputJSON);
     }
@@ -133,9 +119,6 @@ const AddStayForm = ({passNewGroupStayUpScope}) => {
             </div>
             <br />
 
-
-
-
             <div className="addStayForm_inputWrapper">
                 <label htmlFor="addStay-kennelSize">Kennel Size</label>
                 <br />
@@ -145,8 +128,6 @@ const AddStayForm = ({passNewGroupStayUpScope}) => {
                     <option value="large">Large</option>
                 </select>
             </div>
-
-
 
             <div className="addStayForm_inputWrapper">
                 <label htmlFor="addStay-petNotes">Pet Notes</label>

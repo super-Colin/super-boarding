@@ -34,14 +34,17 @@ let MOCKinput=[{
             }]}]}]
 
 
+function createZeroHourDate(dateString){
+    let theDate = new Date(dateString);
+    theDate.setHours(0,0,0,0);
+    return theDate;
+}
+
 // WILL spread args input if it is an array, could bypass by using [[args]]
 function callbackLoopThroughDays(startDateString, endDateString, callback, args){
-    let workingDay = new Date(startDateString);
-    let endDay = new Date(endDateString);
-    workingDay.setHours(0,0,0,0);
-    endDay.setHours(0,0,0,0);
-
     let firstDayOfStay = true;
+    let workingDay = createZeroHourDate(startDateString);
+    const endDay = createZeroHourDate(endDateString);
     while(workingDay != endDay){
         // spread args if it's an array
         if(Array.isArray(args)){
@@ -49,7 +52,6 @@ function callbackLoopThroughDays(startDateString, endDateString, callback, args)
         }else{
             callback(args);
         }
-        
         firstDayOfStay = false;
         workingDay.setDate(workingDay.getDate() + 1); //increment counter
     }
@@ -57,28 +59,20 @@ function callbackLoopThroughDays(startDateString, endDateString, callback, args)
 function checkForKennelSizeAvailability(dateString, kennelSize){console.log("didn't check if kennel was available...")};
 // ^^^  THIS WILL NEED TO RETURN A KENNEL ID FOR THE RESERVATION
 
-function setDateHoursToZero(dateString){
-    let theDate = new Date(dateString);
-    theDate.setHours(0,0,0,0);
-    return theDate;
-}
+
+
 
 
 function createPetReservationForDay(petStayDetails, dateString){
     let [allDayStay, arrivingToday, releasingToday] = [false, false, false];
     let [arrivalTime, releaseTime] = [petStayDetails["arrivalTime"], petStayDetails["releaseTime"]];
-    // let allDayStay = false;
-    // let arrivingToday = false;
-    // let releasingToday = false;
     let reservationForDay = {};
 
     // checkForKennelSizeAvailability(workingDateString, petStayDetails["kennelSize"]);
     // ^^^  THIS WILL NEED TO RETURN A KENNEL ID FOR THE RESERVATION
-    const workingDate = setDateHoursToZero(dateString);
-    
-    const arrivalDate = setDateHoursToZero(petStayDetails["arivalDate"]);
-    const releaseDate = setDateHoursToZero(petStayDetails["releaseDate"]);
-
+    const workingDate = createZeroHourDate(dateString);
+    const arrivalDate = createZeroHourDate(petStayDetails["arivalDate"]);
+    const releaseDate = createZeroHourDate(petStayDetails["releaseDate"]);
 
         // we CANNOT use the == operator an object! it will always return false
     if( arrivalDate >= workingDate && arrivalDate <= workingDate ) {        // if arrival is the working day 
@@ -106,6 +100,9 @@ function createPetReservationForDay(petStayDetails, dateString){
     return reservationForDay;
 }
 
+
+
+
 // function convertGroupStayToReservations(groupStay){
 //     let datesReservations = [];
 //     allStays.map((group)=>{
@@ -127,7 +124,7 @@ function createGroupReservation(groupStay){
         group["pets"].map((petStay)=>{
             // add middleware functions for processing pet stays here
             // checkForFullAvailability();
-            callbackLoopThroughDays(createPetReservationForDay, );
+            callbackLoopThroughDays(petStay.arrivalDate, petStay.releaseDate, createPetReservationForDay, petStay);
         });
 
     });
