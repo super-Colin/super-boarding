@@ -39,8 +39,6 @@ function App() {
       let reservationsForStay = [];
       // console.log('arrival:', petStay.arrivalDate);
 
-
-      let firstDayOfStay = true;
       let workingDay = new Date(petStay.arrivalDate); workingDay.setHours(0,0,0,0);
       let arrivalDay = new Date(petStay.arrivalDate); arrivalDay.setHours(0,0,0,0);
       let releaseDay = new Date(petStay.releaseDate); releaseDay.setHours(0,0,0,0);
@@ -104,15 +102,16 @@ function App() {
   }
   
   const addNewReservationToDate = ( newReservation) =>{
-      console.log('adding reservation to date', newReservation);
+      // console.log('adding reservation to date', newReservation);
     let indexOfDay = getIndexOfDay(newReservation.date);
-    console.log('index is', indexOfDay);
+    // console.log('index is', indexOfDay);
     if(indexOfDay){
-      console.log('FOUND!! date', reservations[indexOfDay])
+      // console.log('FOUND!! date', reservations[indexOfDay])
       let newState = dateReservations;
       newState[indexOfDay].kennelReservations = [newState[indexOfDay].kennelReservations, newReservation.kennelReservations]
+      setDateReservations(newState);
     }else{
-      console.log('didnt find date', newReservation.date, indexOfDay)
+      // console.log('didnt find date', newReservation.date, indexOfDay)
       let newDateReservation =
         {
           "date": newReservation.date,
@@ -121,13 +120,15 @@ function App() {
           "largeAvailable": true,
           "kennelReservations": [...newReservation.kennelReservations]
         };
-
-        setDateReservations([...dateReservations, newDateReservation])
+        let newState = dateReservations;
+        newState.push(newDateReservation);
+        setDateReservations(newState);
+        // setDateReservations([...dateReservations, newDateReservation])
     }
   }
 
   const groupStayToReservations = (groupStay)=>{
-    console.log('taking new groupStay', groupStay);
+    // console.log('taking new groupStay', groupStay);
     groupStay.pets.map((petStay)=>{
       let newReservations = petStayToReservations(groupStay.groupName, petStay);
       // console.log('new reserves are:', newReservations);
