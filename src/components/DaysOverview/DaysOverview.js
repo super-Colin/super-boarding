@@ -1,7 +1,7 @@
 import DayOverview from './DayOverview';
 
 const DaysOverview = ({reservations}) => {
-    console.log('days here', reservations);
+    // console.log('days here', reservations);
 
 
     return (

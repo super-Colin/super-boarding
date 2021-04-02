@@ -57,14 +57,21 @@ const AddStayForm = ({passNewGroupStayUpScope}) => {
     const addStaySubmitHandler = (e)=>{
         e.preventDefault();
         const petsInStay = [];
-
+        
+        let unformattedArrivalDate =arrivalDate.replace(/-/g, '/');
+        unformattedArrivalDate = new Date(unformattedArrivalDate);
+        let formattedArrivalDate = unformattedArrivalDate.getFullYear() + '/' + (unformattedArrivalDate.getMonth() + 1) + '/' +  unformattedArrivalDate.getDate()
+        let unformattedReleaseDate = releaseDate.replace(/-/g, '/');
+        unformattedReleaseDate = new Date(unformattedReleaseDate);
+        let formattedReleaseDate = unformattedReleaseDate.getFullYear() + '/' + (unformattedReleaseDate.getMonth() + 1) + '/' +  unformattedReleaseDate.getDate()
+        
         const petDetails = {
             "petName": petName,
             "kennelSize": kennelSize,
             "notes": petNotes,
-            "arrivalDate": arrivalDate.replace(/-/g, '/'),
+            "arrivalDate": formattedArrivalDate,
             "arrivalTime": arrivalTime,
-            "releaseDate": releaseDate.replace(/-/g, '/'),
+            "releaseDate": formattedReleaseDate,
             "releaseTime": releaseTime,
             "singleDayStay": areDatesSameDay(arrivalDate, releaseDate)
         }

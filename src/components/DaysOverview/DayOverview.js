@@ -1,7 +1,7 @@
 import KennelOverview from './KennelOverview';
 
 const DayOverview = ({reservationsForDay}) => {
-    console.log('day here', reservationsForDay);
+    // console.log('day here', reservationsForDay);
     return (
         <div>
             <h2>{reservationsForDay.date}</h2>
