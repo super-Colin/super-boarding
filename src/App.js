@@ -42,9 +42,9 @@ function App() {
   const addNewStayToReservations = (newStay) =>{
     // console.log('addNewStay is receiving:', newStay);
     let newReservations = [];
-    newStay.pets.map((petStay)=>{
-      createReservationsFromStay(newStay.groupName, petStay)
-    });
+    // newStay.pets.map((petStay)=>{
+    //   createReservationsFromStay(newStay.groupName, petStay)
+    // });
     console.log('addNewStay is passing on:',newReservations);
   }
 

@@ -3,38 +3,38 @@ import {useState} from 'react';
 const AddStayForm = ({passNewGroupStayUpScope}) => {
     const [groupName, setGroupName]= useState('Group from form');
     const [petName, setPetName]= useState('Mr. Kitty');
-    const [arrivalDate, setArrivalDate] = useState('2021-03-16');
+    const [arrivalDate, setArrivalDate] = useState('2021/03/16');
     const [arrivalTime, setArrivalTime] = useState('09:15');
-    const [releaseDate, setReleaseDate] = useState('2021-03-19');
+    const [releaseDate, setReleaseDate] = useState('2021/03/19');
     const [releaseTime, setReleaseTime] = useState('17:00');
     const [petNotes,setPetNotes] = useState('heres some notes');
     const [kennelSize,setKennelSize] = useState('medium');
-        // const petDetails = {
-        //     "petName": petName,
-        //     "kennelSize": kennelSize,
-        //     "notes": petNotes,
-        //     "arrivalDate": formattedArrivalDate,
-        //     "arrivalTime": arrivalTime,
-        //     "releaseDate": formattedReleaseDate,
-        //     "releaseTime": releaseTime,
-        //     "singleDayStay": areDatesSameDay(arrivalDate, releaseDate)
-        // }
+        const boilerplatePetDetails = {
+            // "formKey": 1,2,3..
+            "petName": "Mr. Kitty",
+            "kennelSize": 'medium',
+            "notes":'notes note notes etNote',
+            "arrivalDate": '2021/03/16',
+            "arrivalTime": '17:00',
+            "releaseDate": '2021/03/19',
+            "releaseTime": '17:00',
+            "singleDayStay": false
+        }
         
-    const increasePetStayInputs = ()=>{}
+    const increasePetStayInputs = ()=>{
+        let newState = { ...addStayFormStayState};
+        let newPetStayLabel = Object.keys(newState.pets).length * Math.ceil(Math.random() * 35);
+        newState.pets[newPetStayLabel] = {"formKey":newPetStayLabel , ...boilerplatePetDetails}
+        setAddStayFormStayState(newState);
+    }
 
     const [addStayFormStayState, setAddStayFormStayState] = useState({
         "groupName": "Smith",
         "groupNotes": "Here's some notes",
-        "numberOfPets": 2,
         "pets":{
-            "1":{
-                "formKey":1,
-                "petName":"Mr. Kitty"
+            "1":{"formKey":1,
+                ...boilerplatePetDetails
             },
-            "2":{
-                "formKey":2,
-                "petName":"Mr. Kitty2"
-            }
         }
 
     })
@@ -44,9 +44,9 @@ const AddStayForm = ({passNewGroupStayUpScope}) => {
         setAddStayFormStayState({ ...addStayFormStayState, [e.target.name]: e.target.value})
     }
     const updatePetState = (e)=>{
-        console.log('previous state is : ', addStayFormStayState)
+        // console.log('previous state is : ', addStayFormStayState)
         let newState = { ...addStayFormStayState};
-        console.log('newState is : ', newState)
+        // console.log('newState is : ', newState)
         newState.pets[e.target.getAttribute('data-formkey')] = {...newState.pets[e.target.getAttribute('data-formKey')], [e.target.name]:e.target.value }
         setAddStayFormStayState(newState);
     }
@@ -67,6 +67,12 @@ const AddStayForm = ({passNewGroupStayUpScope}) => {
             <div className="addStayForm_inputWrapper">
                 <label htmlFor="addStay-groupName">Group Name</label>
                 <input required id="addStay-groupName" type="text" minLength="4" name="groupName" value={addStayFormStayState.groupName} onChange={(e)=> updateGroupState(e) } />
+            </div>
+
+            <div className="addStayForm_inputWrapper">
+                <label htmlFor="addStay-groupNotes">Group Notes</label>
+                <br />
+                <textarea required id="addStay-groupNotes" type="text" minLength="4" name="groupNotes" value={addStayFormStayState.groupNotes} onChange={(e)=> updateGroupState(e) } />
             </div>
             <br />
 
