@@ -9,82 +9,55 @@ const AddStayForm = ({passNewGroupStayUpScope}) => {
     const [releaseTime, setReleaseTime] = useState('17:00');
     const [petNotes,setPetNotes] = useState('heres some notes');
     const [kennelSize,setKennelSize] = useState('medium');
+        // const petDetails = {
+        //     "petName": petName,
+        //     "kennelSize": kennelSize,
+        //     "notes": petNotes,
+        //     "arrivalDate": formattedArrivalDate,
+        //     "arrivalTime": arrivalTime,
+        //     "releaseDate": formattedReleaseDate,
+        //     "releaseTime": releaseTime,
+        //     "singleDayStay": areDatesSameDay(arrivalDate, releaseDate)
+        // }
+        
+    const increasePetStayInputs = ()=>{}
 
-
-    const setInputInvalid = (elem)=>{
-        elem.classList.add('invalidInput');
-        elem.setAttribute("isvalid", "false");
-    }
-    const setInputValid = (elem)=>{
-        elem.classList.remove('invalidInput');
-        elem.setAttribute("isvalid", "true")
-    }
-    const nameValidation = (elem, elemNameState, nameMinLength)=>{
-        if(elemNameState.length < nameMinLength){
-            setInputInvalid(elem);
-            return `Please use a name with at least ${nameMinLength} letters`;
-        }else{
-            setInputValid(elem);
-            return 'valid';
+    const [addStayFormStayState, setAddStayFormStayState] = useState({
+        "groupName": "Smith",
+        "groupNotes": "Here's some notes",
+        "numberOfPets": 2,
+        "pets":{
+            "1":{
+                "formKey":1,
+                "petName":"Mr. Kitty"
+            },
+            "2":{
+                "formKey":2,
+                "petName":"Mr. Kitty2"
+            }
         }
-    }
-    const groupNameValidation = ()=>{
-        let groupNameElem = document.getElementById('addStay-groupName');
-        nameValidation(groupNameElem, groupName, 4)
-    }
-    const petNameValidation = ()=>{
-        let petNameElem = document.getElementById('addStay-petName');
-        if(petName.length < 2){
-            setInputInvalid(petNameElem);
-            return 'Please use a name with at least 4 letters';
-        }else{
-            setInputValid(petNameElem);
-            return 'valid';
-        }
-    }
 
-    const areDatesSameDay = (dateString1, dateString2) =>{
-        const date1 = new Date(dateString1);
-        const date2 = new Date(dateString2);
-        // We are assuming that there will never be a stay that ends on the same day and month of another year
-        if(date1.getDate() === date2.getDate() && date1.getMonth() === date2.getMonth() ){
-            return true;
-        }
-        return false
-    }
+    })
 
+
+    const updateGroupState = (e)=>{
+        setAddStayFormStayState({ ...addStayFormStayState, [e.target.name]: e.target.value})
+    }
+    const updatePetState = (e)=>{
+        console.log('previous state is : ', addStayFormStayState)
+        let newState = { ...addStayFormStayState};
+        console.log('newState is : ', newState)
+        newState.pets[e.target.getAttribute('data-formkey')] = {...newState.pets[e.target.getAttribute('data-formKey')], [e.target.name]:e.target.value }
+        setAddStayFormStayState(newState);
+    }
 
     const addStaySubmitHandler = (e)=>{
         e.preventDefault();
         const petsInStay = [];
-        
-        let unformattedArrivalDate =arrivalDate.replace(/-/g, '/');
-        unformattedArrivalDate = new Date(unformattedArrivalDate);
-        let formattedArrivalDate = unformattedArrivalDate.getFullYear() + '/' + (unformattedArrivalDate.getMonth() + 1) + '/' +  unformattedArrivalDate.getDate()
-        let unformattedReleaseDate = releaseDate.replace(/-/g, '/');
-        unformattedReleaseDate = new Date(unformattedReleaseDate);
-        let formattedReleaseDate = unformattedReleaseDate.getFullYear() + '/' + (unformattedReleaseDate.getMonth() + 1) + '/' +  unformattedReleaseDate.getDate()
-        
-        const petDetails = {
-            "petName": petName,
-            "kennelSize": kennelSize,
-            "notes": petNotes,
-            "arrivalDate": formattedArrivalDate,
-            "arrivalTime": arrivalTime,
-            "releaseDate": formattedReleaseDate,
-            "releaseTime": releaseTime,
-            "singleDayStay": areDatesSameDay(arrivalDate, releaseDate)
-        }
-        petsInStay.push(petDetails);
 
-        const ouputJSON = {
-        "groupName": groupName,
-        "pets": petsInStay
-        }
-
-        console.log('addForm is passing up:', ouputJSON);
-        // return ouputJSON;
-        passNewGroupStayUpScope(ouputJSON);
+        let outputJSON = {}
+        // console.log('addForm is passing up:', outputJSON);
+        passNewGroupStayUpScope(outputJSON);
     }
 
     return (
@@ -93,57 +66,30 @@ const AddStayForm = ({passNewGroupStayUpScope}) => {
             
             <div className="addStayForm_inputWrapper">
                 <label htmlFor="addStay-groupName">Group Name</label>
-                <input required id="addStay-groupName" type="text" minLength="4" value={groupName} onChange={(e)=> setGroupName(e.target.value)} />
-                <span style={{"display":"none"}} id="addStayForm-groupNameReport"></span>
-            </div>
-            <br />
-
-            <div className="addStayForm_inputWrapper">
-                <label htmlFor="addStay-petName">Pet Name</label>
-                <input required id="addStay-petName" type="text" minLength="2" value={petName} onChange={(e)=> setPetName(e.target.value)} />
-                <span style={{"display":"none"}} id="addStayForm-groupNameReport"></span>
-            </div>
-            <br />
-
-            <div className="addStayForm_inputWrapper">
-                <label htmlFor="addStay-arrivalDate">Arrival Date</label>
-                <input required id="addStay-arrivalDate" type="date" value={arrivalDate} onChange={(e)=> setArrivalDate(e.target.value)} />
-
-                <label htmlFor="addStay-arrivalTime">Arrival Time</label>
-                <input required id="addStay-arrivalTime" type="time" value={arrivalTime} onChange={(e)=> setArrivalTime(e.target.value)} />
-                <span style={{"display":"none"}} id="addStayForm-groupNameReport"></span>
+                <input required id="addStay-groupName" type="text" minLength="4" name="groupName" value={addStayFormStayState.groupName} onChange={(e)=> updateGroupState(e) } />
             </div>
             <br />
 
 
-            <div className="addStayForm_inputWrapper">
-                <label htmlFor="addStay-releaseDate">Release Date</label>
-                <input required id="addStay-releaseDate" type="date"  value={releaseDate} onChange={(e)=> setReleaseDate(e.target.value)}  />
 
-                <label htmlFor="addStay-releaseTime">Release Time</label>
-                <input required id="addStay-releaseTime" type="time" value={releaseTime} onChange={(e)=> setReleaseTime(e.target.value)} />
-                <span style={{"display":"none"}} id="addStayForm-groupNameReport"></span>
-            </div>
+            {Object.keys(addStayFormStayState.pets).map((petStayLabel)=>{
+
+                {console.log('petStay is : ', addStayFormStayState.pets[petStayLabel])}
+                return <div key={petStayLabel} className="addStayForm_petStay-container">
+                    <div className="addStayForm_inputWrapper">
+                        <label htmlFor="addStay-petName">Pet Name</label>
+                        <input required name="petName" data-formkey={petStayLabel} type="text" minLength="2" value={addStayFormStayState.pets[petStayLabel].petName} onChange={(e)=> updatePetState(e)} />
+                    </div>
+                    
+                </div>
+                {/* /petStay form wrapper */}
+            })}
             <br />
-
-            <div className="addStayForm_inputWrapper">
-                <label htmlFor="addStay-kennelSize">Kennel Size</label>
-                <br />
-                <select required id="addStay-kennelSize" value={kennelSize} onChange={(e)=> setKennelSize(e.target.value)}>
-                    <option value="small">Small</option>
-                    <option value="medium">Medium</option>
-                    <option value="large">Large</option>
-                </select>
-            </div>
-
-            <div className="addStayForm_inputWrapper">
-                <label htmlFor="addStay-petNotes">Pet Notes</label>
-                <br />
-                <textarea id="addStay-petNotes" placeholder="Notes, medical or otherwise" value={petNotes} onChange={(e)=> setPetNotes(e.target.value)} />
-            </div>
+            <button onClick={increasePetStayInputs}>Add Another Pet</button>
 
             <br />
             <button formAction="submit">Submit</button>
+            <pre>{JSON.stringify(addStayFormStayState, null, 2)}</pre>
         </form>
     )
 }
