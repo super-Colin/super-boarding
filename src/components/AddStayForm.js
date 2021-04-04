@@ -6,9 +6,9 @@ const AddStayForm = ({passNewGroupStayUpScope}) => {
         "petName": "Mr. Kitty",
         "kennelSize": 'medium',
         "notes":'note note note',
-        "arrivalDate": '2021/03/16',
+        "arrivalDate": '2021-03-16',
         "arrivalTime": '17:00',
-        "releaseDate": '2021/03/19',
+        "releaseDate": '2021-03-19',
         "releaseTime": '17:00',
         "singleDayStay": false
     }
@@ -16,7 +16,9 @@ const AddStayForm = ({passNewGroupStayUpScope}) => {
         "groupName": "Smith",
         "groupNotes": "Here's some notes",
         "pets":{
-            "1":{"formKey":1,
+            "1":{
+                "formKey": 1,
+                "groupName": "Smith",
                 ...boilerplatePetDetails
             },
         }
@@ -29,6 +31,7 @@ const AddStayForm = ({passNewGroupStayUpScope}) => {
         newState.pets[e.target.getAttribute('data-formkey')] = {...newState.pets[e.target.getAttribute('data-formKey')], [e.target.name]:e.target.value }
         setAddStayFormStayState(newState);
     }
+
     const increasePetStayInputs = ()=>{
         let newState = { ...addStayFormStayState};
         let newPetStayLabel = Math.ceil((Object.keys(newState.pets).length * 2) * Math.random() * 1000);
@@ -37,18 +40,13 @@ const AddStayForm = ({passNewGroupStayUpScope}) => {
     }
     const removePetStayInput = (e)=>{
         let newState = { ...addStayFormStayState};
-        let key = e.target.getAttribute('data-formkey');
-        // console.log('remove input key:', key);
-        delete newState.pets[key];
+        delete newState.pets[e.target.getAttribute('data-formkey')];
         setAddStayFormStayState(newState);
     }
     const addStaySubmitHandler = (e)=>{
         e.preventDefault();
-        const petsInStay = [];
-
-        let outputJSON = {}
-        // console.log('addForm is passing up:', outputJSON);
-        passNewGroupStayUpScope(outputJSON);
+        console.log('addForm is passing up:', addStayFormStayState);
+        passNewGroupStayUpScope(addStayFormStayState);
     }
 
     return (
@@ -124,6 +122,7 @@ const AddStayForm = ({passNewGroupStayUpScope}) => {
             <br />
             <button formAction="submit">Submit</button>
             <pre>{JSON.stringify(addStayFormStayState, null, 2)}</pre>
+            <br /><br /><hr /><br /><hr /><br />
         </form>
     )
 }
