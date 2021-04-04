@@ -100,38 +100,89 @@ function App() {
     console.log('created reservations : ', reservationsForStay);
     return reservationsForStay;
   }
-  const checkDateAvailability = (potentialReservation)=>{
+  const getFirstAvailableIdOfKennelSize = (dateReservation, kennelSizeNeeded)=>{
+    console.log('getFirstAvailable is recieving :', dateReservation);
+    console.log('getFirstAvailable is recieving, kennelReservations :', dateReservation.kennelReservations);
+    const maxReservationsOfSize = dateReservation[kennelSizeNeeded + 'Total'];
+    const kennelReservationsOfSize = dateReservation.kennelReservations.filter( reservation => reservation.kennelSize == kennelSizeNeeded );
+    console.log('Available : ', maxReservationsOfSize,'Taken : ', kennelReservationsOfSize.length);
+    if(maxReservationsOfSize <= kennelReservationsOfSize.length){
+      console.log('kennel size is full!');
+      return false;
+    }else{
+      let kennelIdsReserved = [];
+      kennelReservationsOfSize.map((reservationsOfSize)=>{ // loop through taken kennels and store ID to find lowest
+        kennelIdsReserved.push(reservationsOfSize.kennelId);
+      })
+      if(kennelIdsReserved.length == 0){kennelIdsReserved.push(0)}
+      console.log('reserved Ids : ', kennelIdsReserved);
+      let idToReserve = Math.min(...kennelIdsReserved) + 1;
+      console.log('next Id to reserve is: ', idToReserve);
+      return idToReserve;
+    }
+  }
+  const updateDateState = (potentialReservation)=>{
     console.log('Potential Reservation : ', potentialReservation);
-    console.log('checking dateReservations', dateReservations);
-    // let kennelSizeNeeded = potentialReservation.kennelReservations[0].kennelSize;
+    let kennelSizeNeeded = potentialReservation.kennelReservations[0].kennelSize;
     let newState = dateReservations;
     if(dateReservations[potentialReservation.date]){
-      console.log('ADDING a reserve to day', dateReservations[potentialReservation.date]);
-      newState[potentialReservation.date].kennelReservations.push(potentialReservation.kennelReservations[0]);
-      console.log('ADDED a reserve to day', dateReservations[potentialReservation.date]);
+      console.log('found day, about to get next ID', dateReservations[potentialReservation.date]);
+      let nextAvailableId = getFirstAvailableIdOfKennelSize(dateReservations[potentialReservation.date], kennelSizeNeeded);
+      if(nextAvailableId){
+      let formattedReservation = potentialReservation.kennelReservations[0];
+        formattedReservation.kennelId = nextAvailableId;
+        newState[potentialReservation.date].kennelReservations.push(formattedReservation);
+        // console.log('ADDED a reserve to day', dateReservations[potentialReservation.date]);
+        console.log('ADDED a reserve to day');
+      }else{
+        newState[potentialReservation.date][kennelSizeNeeded + 'Available'] = false;
+        console.log('COULD NOT add a reserve to day');
+      }
     }else{
-      
       newState[potentialReservation.date] = {
         ...emptyDateKennelSizesBoilerplate(),
         "kennelReservations":[potentialReservation.kennelReservations[0] ]
       };
     }
-    setDateReservations(newState);
+    return newState;
   }
-  const mergeNewReservationsToState = (newReservations)=>{
-    Object.keys(newReservations).map((dateKey)=>{
-      checkDateAvailability(newReservations[dateKey]);
+  const mergeNewReservationsToState = (newReservations, newReservationsState)=>{
+    let newState = newReservationsState;
+    let successStatus = true;
+    
+    Object.keys(newReservations).map((dateKey)=>{ // loop through date reservations for this pet
+      console.log('about to update with :', newReservations[dateKey]);
+      const updatedDateState = updateDateState(newReservations[dateKey]);
+      if(updatedDateState){
+        newState[dateKey] = updatedDateState;
+      }else{
+        successStatus = false;
+        console.log('COULD NOT ADD, DATE OCCUPIED :', dateKey);
+      }
     })
+    if(successStatus){
+      return newState;
+    }else{
+      return false;
+    }
+
   }
 
-  const addGroupStayToReservations = (groupStay)=>{
+  const addGroupStayToReservations = (groupStay)=>{ 
     console.log('addGroupStay is receiving', groupStay);
     addGroupToGroupStays(groupStay);
-    Object.keys(groupStay.pets).map((key)=>{
+    let newReservationsState = dateReservations;
+    Object.keys(groupStay.pets).map((key)=>{ // loop through pets in the newly added group
       console.log('groupStay pet is : ', groupStay.pets[key]);
-      let newReservations = petStayToReservations(groupStay.pets[key]);
-      mergeNewReservationsToState(newReservations);
-    })
+      let newReservations = petStayToReservations(groupStay.pets[key]); //returns an object of dates with reservations for this pet
+      newReservationsState = mergeNewReservationsToState(newReservations, newReservationsState);
+    });
+    if(newReservationsState != false){
+      setDateReservations(newReservationsState);
+      console.log('---UPDATED RESERVATIONS STATE---');
+    }else{
+      console.log('---COULD NOT ADD FOR SOME REASON---');
+    }
   }
 
 
