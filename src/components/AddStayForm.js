@@ -50,7 +50,7 @@ const AddStayForm = ({passNewGroupStayUpScope}) => {
     }
 
     return (
-        <form className="addStayForm_container" onSubmit={addStaySubmitHandler}>
+        <form className="addStayForm_container" onSubmit={(e)=>e.preventDefault()}>
             <h1>Add Stay</h1>
             
             <div className="addStayForm_inputWrapper">
@@ -71,7 +71,9 @@ const AddStayForm = ({passNewGroupStayUpScope}) => {
 
                 {/* {console.log('petStay is : ', addStayFormStayState.pets[petStayLabel])} */}
                 return <div key={petStayLabel} className="addStayForm_petStay-container">
+
                 <button data-formkey={petStayLabel} onClick={(e)=>{removePetStayInput(e)}}>Remove</button>
+
                     <div className="addStayForm_inputWrapper">
                         <label htmlFor="addStay-petName">Pet Name</label>
                         <input required name="petName" data-formkey={petStayLabel} type="text" minLength="2" value={addStayFormStayState.pets[petStayLabel].petName} onChange={(e)=> updatePetState(e)} />
@@ -116,11 +118,13 @@ const AddStayForm = ({passNewGroupStayUpScope}) => {
                 </div>
                 {/* /petStay form wrapper */}
             })}
+
             <br />
             <button onClick={increasePetStayInputs}>Add Another Pet</button>
 
             <br />
-            <button formAction="submit">Submit</button>
+            {/* <button formAction="submit">Submit</button> */}
+            <button onClick={addStaySubmitHandler}>Submit</button>
             <pre>{JSON.stringify(addStayFormStayState, null, 2)}</pre>
             <br /><br /><hr /><br /><hr /><br />
         </form>
