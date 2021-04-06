@@ -93,12 +93,8 @@ function App() {
     console.log('datesForStay : ', datesForStay);
     return datesForStay;
   }
-  const createReservationForDate = ()=>{
-    
-  }
-
-  const addPetReservationToDate = (dateObject, petStay)=>{
-    console.log('addPetReservationToDate is receiving : ' , dateObject, petStay);
+  const createPetReservationForDate = (dateObject, petStay)=>{
+    console.log('createPetReservationForDate is receiving : ', dateObject, petStay);
     let newReservationForDate = {};
 
     let [arrivalTime, releaseTime] = [petStay.arrivalTime, petStay.releaseTime];
@@ -129,21 +125,50 @@ function App() {
           "releaseTime": petStay.releaseTime,
           "notes": petStay.notes
     }]};
-    console.log('addPetReservationToDate is returning : ' , newReservationForDate);
+    console.log('createPetReservationForDate is returning : ' , newReservationForDate);
     return newReservationForDate;
   }
 
-  const processNewPet = (newPet)=>{
+  const createReservationForDate = (dateObject, petStay)=>{
+    const newPetReservationForDate = createPetReservationForDate(dateObject, petStay);
+    const newReservationDate = {"date": formatDateString(dateObject.date), "kennelReservations":[newPetReservationForDate]};
+    return newPetReservationForDate;
+  }
+
+  const addPetReservationToDate = (dateObject, petStay)=>{
+    console.log('addPetReservationToDate is receiving : ' , dateObject, petStay);
+    const newPetReservationForDate = createPetReservationForDate(dateObject, petStay);
+    // if (! workingState.date){createReservationToDate()}
+    // if (kennelSpaceAvailable)
+    const newReservationDate = {"date": formatDateString(dateObject.date), "kennelReservations":[newPetReservationForDate]};
+    console.log('addPetReservationToDate is returning : ', newPetReservationForDate);
+    return newPetReservationForDate;
+  }
+
+  const processNewPet = (newPet, workingReservationsState)=>{
     console.log('processNewPet is receiving', newPet);
     let newDates = generateDatesFromPet(newPet);
-    let newReservations = {};
+    let [newReservations, successStatus] = [{}, true];
     console.log('processNewPet is about to loop over : ', newDates);
     Object.keys(newDates).map((dateKey)=>{
-      console.log('looping through date : ', dateKey,newDates[dateKey]);
-      newReservations[dateKey] = addPetReservationToDate(newDates[dateKey], newPet);
+      // console.log('looping through date : ', dateKey,newDates[dateKey]);
+      let successCheck = addPetReservationToDate(newDates[dateKey], newPet);
+      if(successCheck != false){
+        // newReservations[dateKey] = addPetReservationToDate(newDates[dateKey], newPet);
+        newReservations[dateKey] = successCheck;
+      } else{
+        console.log('SUCCESS CHECK NOT MET IN processNewPet, successCheck: ', successCheck);
+        return false
+      }
     })
-    console.log('processNewPet is returning', newDates);
+    
+    console.log('processNewPet is returning', newReservations);
+    if(successStatus === true){
+      return newReservations;
+    }
+
   }
+
 
   const newGroupStayHandler = (newGroup) =>{
     // console.log('newGroupHandler is receiving : ', newGroup);
@@ -151,7 +176,14 @@ function App() {
     let successStatus = true;
     Object.keys(newGroup.pets).map((petKey)=>{
       console.log('pet in group is: ', newGroup.pets[petKey].petName);
-      processNewPet(newGroup.pets[petKey]);
+      // newReservationsState = processNewPet(newGroup.pets[petKey], newReservationsState);
+      let successCheck = processNewPet(newGroup.pets[petKey], newReservationsState);
+      if(successCheck != false){
+        newReservationsState = successCheck;
+      } else{
+        console.log('SUCCESS CHECK NOT MET IN newGroupStayHandler , successCheck: ', successCheck);
+        return false
+      }
     })
 
 
