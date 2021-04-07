@@ -73,6 +73,19 @@ function App() {
   }
 
 
+
+  const findFirstMissingNumber = (sortedList, index, x, maxAllowedValue)=>{
+    if(sortedList[index] == x && x < maxAllowedValue){
+      return findFirstMissingNumber(sortedList, (index+1), (x+1), maxAllowedValue);
+    }else{
+      return x;
+    }
+  }
+  // findFirstMissingNumber([3, 4, 5, 7, 8, 9, 12, 13], 0, 3, 16);
+
+
+
+
   const generateDatesFromPet = (petStay)=>{
     console.log('generateDatesFromPet is receiving : ', petStay);
     let datesForStay = {};
@@ -137,10 +150,13 @@ function App() {
       let kennelIdsReserved = [];
       kennelReservationsOfSize.map((reservationsOfSize)=>{ // loop through taken kennels and store ID to find lowest
         kennelIdsReserved.push(reservationsOfSize.kennelId);
-      })
+      });
       if(kennelIdsReserved.length == 0){kennelIdsReserved.push(0)}
       console.log('reserved Ids : ', kennelIdsReserved);
-      let idToReserve = Math.min(...kennelIdsReserved) + 1;
+        // findFirstMissingNumber([3, 4, 5, 7, 8, 9, 12, 13], 0, 3, 16);
+
+      // let idToReserve = Math.min(...kennelIdsReserved) + 1;
+      let idToReserve = findFirstMissingNumber(kennelIdsReserved, 0, 1, maxReservationsOfSize);
       console.log('next Id to reserve is: ', idToReserve);
       return idToReserve;
     }
@@ -227,6 +243,9 @@ function App() {
     });
     addGroupToGroupStays(newGroup);
     setDateReservations(newReservationsState)
+    console.log('-------------------------');
+    console.log('-------------------------');
+    console.log('-------------------------');
   }
 
 
@@ -241,6 +260,8 @@ function App() {
 
                                             {/* Maybe pass this into some kind of vaildation before setState() */}
       <AddStayForm passNewGroupStayUpScope={newGroupStayHandler} />
+      <pre>{JSON.stringify(dateReservations, null, 2)}</pre>
+
       <CurrentStayInfo currentStayDetails={currentStayDetails} />
       <DaysOverview reservations={dateReservations} />
       

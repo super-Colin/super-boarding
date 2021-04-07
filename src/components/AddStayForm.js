@@ -125,7 +125,7 @@ const AddStayForm = ({passNewGroupStayUpScope}) => {
             <br />
             {/* <button formAction="submit">Submit</button> */}
             <button onClick={addStaySubmitHandler}>Submit</button>
-            <pre>{JSON.stringify(addStayFormStayState, null, 2)}</pre>
+            {/* <pre>{JSON.stringify(addStayFormStayState, null, 2)}</pre> */}
             <br /><br /><hr /><br /><hr /><br />
         </form>
     )
