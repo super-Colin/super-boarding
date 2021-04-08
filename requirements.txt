@@ -9,7 +9,7 @@ Special notes about a dog in any group
 
 Ability to add and edit stays
 
-
+Ability to double book kennels if overridden to do so
 
 
 

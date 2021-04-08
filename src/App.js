@@ -72,19 +72,11 @@ function App() {
     return formattedDateString;
   }
 
-
-
   const findFirstMissingNumber = (sortedList, index, x, maxAllowedValue)=>{
     if(sortedList[index] == x && x < maxAllowedValue){
       return findFirstMissingNumber(sortedList, (index+1), (x+1), maxAllowedValue);
-    }else{
-      return x;
-    }
+    }else{ return x; }
   }
-  // findFirstMissingNumber([3, 4, 5, 7, 8, 9, 12, 13], 0, 3, 16);
-
-
-
 
   const generateDatesFromPet = (petStay)=>{
     console.log('generateDatesFromPet is receiving : ', petStay);
@@ -152,10 +144,7 @@ function App() {
         kennelIdsReserved.push(reservationsOfSize.kennelId);
       });
       if(kennelIdsReserved.length == 0){kennelIdsReserved.push(0)}
-      console.log('reserved Ids : ', kennelIdsReserved);
-        // findFirstMissingNumber([3, 4, 5, 7, 8, 9, 12, 13], 0, 3, 16);
-
-      // let idToReserve = Math.min(...kennelIdsReserved) + 1;
+      // console.log('reserved Ids : ', kennelIdsReserved);
       let idToReserve = findFirstMissingNumber(kennelIdsReserved, 0, 1, maxReservationsOfSize);
       console.log('next Id to reserve is: ', idToReserve);
       return idToReserve;
@@ -183,8 +172,8 @@ function App() {
       newDateState = workingReservationsState[dateString];
       const kennelIdToReserve = getFirstAvailableIdOfKennelSize(workingReservationsState[dateString], petStay.kennelSize, workingReservationsState);
       const successCheck = createPetReservationForDate(dateString, petStay, kennelIdToReserve);
-      if(successCheck === false){
-        console.log('SUCCESS CHECK NOT MET IN addPetReservationsState, successCheck: ', successCheck);
+      if(successCheck === false || kennelIdToReserve === false){
+        console.log('SUCCESS CHECK NOT MET IN addPetReservationsState, successCheck: ', successCheck, 'kennelIdToReserve : ', kennelIdToReserve);
         return false;
       }else{
         console.log('about to push:', successCheck,' to : ', newDateState);
