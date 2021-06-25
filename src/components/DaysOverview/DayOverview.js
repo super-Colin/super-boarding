@@ -1,20 +1,35 @@
-import KennelOverview from './KennelOverview';
+import KennelRowOverview from './KennelRowOverview';
 
 const DayOverview = ({reservationsForDay}) => {
     // console.log('day here', reservationsForDay);
+
+    let sortedReservationsZZZ ={};
+    // sortedReservations.map((kennelReservation)=>{
+    reservationsForDay.kennelReservations.map((kennelReservation)=>{
+        if( sortedReservationsZZZ[kennelReservation.kennelSize]){
+            sortedReservationsZZZ[kennelReservation.kennelSize].push(kennelReservation);
+        }else{
+            sortedReservationsZZZ[kennelReservation.kennelSize] = [kennelReservation];
+        }
+    });
+    
+
+    // console.log( 'SORTED RESERVATIONS ',sortedReservations);
+    // console.log( 'SORTED RESERVATIONSZZZ ',sortedReservationsZZZ);
     return (
         <div>
-            {/* <h2>{reservationsForDay.date}</h2> */}
-            <h2>date</h2>
+            <h1>______________________________________</h1>
+            <h2>Date: {reservationsForDay.date}</h2>
+            
 
-            {/* <h2>{reservationsForDay.date}</h2>
-            {
-                reservationsForDay.kennelReservations.map((reservation)=>{
-                    const kennelKey = reservation.kennelSize + '-' + reservation.kennelId;
-                    return <KennelOverview key={kennelKey} reservation={reservation} kennelKey={kennelKey} />
-                })
-            }
-            <hr /> */}
+            {Object.values(sortedReservationsZZZ).map((kennelSizeReservations)=>{
+                return <KennelRowOverview key={kennelSizeReservations.kennelSize} kennelSizeReservations={kennelSizeReservations} />
+            })}
+
+
+            {/* <pre>{JSON.stringify(reservationsForDay, null, 2)}</pre> */}
+
+
         </div>
     )
 }

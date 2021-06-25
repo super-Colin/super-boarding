@@ -265,9 +265,9 @@ function App() {
 
                                             {/* Maybe pass this into some kind of vaildation before setState() */}
       <AddStayForm passNewGroupStayUpScope={newGroupStayHandler} />
-      <pre>{JSON.stringify(dateReservations, null, 2)}</pre>
+      {/* <pre>{JSON.stringify(dateReservations, null, 2)}</pre> */}
 
-      <CurrentStayInfo currentStayDetails={currentStayDetails} />
+      {/* <CurrentStayInfo currentStayDetails={currentStayDetails} /> */}
       <DaysOverview reservations={dateReservations} />
       
     </div>

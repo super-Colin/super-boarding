@@ -64,3 +64,22 @@ html{
 
 .kennelGrid_cell-vacant{background-color: lightgreen;}
 .kennelGrid_cell-occupied{background-color: lightblue;}
+
+
+
+.kennelRow{
+  display: flex;
+  flex-wrap: wrap;
+}
+.kennelRow h3{width: 100%;}
+.kennelOverview {
+  display: block;
+  background-color: orange;
+  margin: 0 2rem;
+}
+.kennelRow-small .kennelOverview {
+  background-color: yellow;
+}
+.kennelRow-large .kennelOverview {
+  background-color: red;
+}
