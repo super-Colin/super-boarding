@@ -9,10 +9,6 @@ import settings from './mockDbSettings.json';
 // // import reservations from './mockDbReservations.json'
 // import reservations from './mockDbReservations_empty.json'
 
-
-import {useSelector, useDispatch} from 'react-redux';
-import {increment, decrement} from './actions/index'
-
 function App() {
   const emptyDateKennelSizesBoilerplate= ()=>{
     let sizesBoilerplate = {}
@@ -246,20 +242,8 @@ function App() {
 
   const logGroup =()=>{console.log('GroupStays is : ', groupStays)}
   const logRes =()=>{console.log('Reservations State is : ', dateReservations)}
-
-  const counter = useSelector(state => state.counter);
-  const loggedIn = useSelector(state => state.logged);
-  const dispatch = useDispatch();
   return (
     <div className="App">
-    
-      <div>
-        <h1>Counter = {counter}</h1>
-        <button onClick={()=>dispatch(increment(4))}>Increment</button>
-        <button onClick={()=>dispatch(decrement())}>Decrement</button>
-      </div>
-      {loggedIn ? <h2>Logged in</h2> : <h2>Not logged in</h2>}
-    
       <button onClick={logGroup}>log groupStays</button>
       <button onClick={logRes}>log Reservations</button>
 
