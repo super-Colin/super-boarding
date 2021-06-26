@@ -83,7 +83,7 @@ function App() {
   }
 
   const generateDatesFromPet = (petStay)=>{
-    console.log('generateDatesFromPet is receiving : ', petStay);
+    // console.log('generateDatesFromPet is receiving : ', petStay);
     let datesForStay = {};
     let [workingDay, releaseDay] = [new Date(formatDateString(petStay.arrivalDate)), new Date(formatDateString(petStay.releaseDate))];
     let [onEndDay, i] = [false, 0];
@@ -99,7 +99,7 @@ function App() {
       i++; //increment backup dev counter
       if(i > 12){ onEndDay = true; console.log('generateDatesFromPet while loop overflow!!!');}
     }
-    console.log('datesForStay : ', datesForStay);
+    // console.log('datesForStay : ', datesForStay);
     return datesForStay;
   }
   const createPetReservationForDate = (dateString, petStay, kennelIdToReserve)=>{
@@ -134,8 +134,7 @@ function App() {
   }
 
   const getFirstAvailableIdOfKennelSize = (workingDateReservationsObject, kennelSizeNeeded)=>{
-    // console.log('getFirstAvailable is recieving :', dateReservationsObject);
-    console.log('getFirstAvailable is working with state :', workingDateReservationsObject);
+    // console.log('getFirstAvailable is working with state :', workingDateReservationsObject);
     const maxReservationsOfSize = workingDateReservationsObject[kennelSizeNeeded + 'Total'];
     const kennelReservationsOfSize = workingDateReservationsObject.kennelReservations.filter( reservation => reservation.kennelSize == kennelSizeNeeded );
     console.log('Available : ', maxReservationsOfSize,'Taken : ', kennelReservationsOfSize.length);
@@ -162,60 +161,76 @@ function App() {
       ...emptyDateKennelSizesBoilerplate(),
       "kennelReservations":[ newPetReservationForDate ]
     };
-    console.log('createReservationsForDate is returning : ', newReservationsDate);
+    // console.log('createReservationsForDate is returning : ', newReservationsDate);
     return newReservationsDate;
   }
 
 
   const addPetReservationToDate = (dateString, petStay, workingReservationsState)=>{// :::FOR EACH DATE IN RANGE
-    console.log('addPetReservationToDate is receiving : ' , dateString, petStay);
+    // console.log('addPetReservationToDate is receiving : ' , dateString, petStay);
     let newDateState = {};
+    let successStatus = true;
 
     if(workingReservationsState[dateString]){ // :::CHECK FOR DATE IN RESERVATIONS
-      console.log('addPetReservationToDate found day :', workingReservationsState[dateString]);
+      // console.log('addPetReservationToDate found day :', workingReservationsState[dateString]);
       newDateState = workingReservationsState[dateString];
       const kennelIdToReserve = getFirstAvailableIdOfKennelSize(workingReservationsState[dateString], petStay.kennelSize, workingReservationsState);
       const successCheck = createPetReservationForDate(dateString, petStay, kennelIdToReserve);
+      
       if(successCheck === false || kennelIdToReserve === false){
-        console.log('SUCCESS CHECK NOT MET IN addPetReservationsState, successCheck: ', successCheck, 'kennelIdToReserve : ', kennelIdToReserve);
+        console.log('SUCCESS CHECK NOT MET IN addPetReservationToDate, successCheck: ', successCheck, 'kennelIdToReserve : ', kennelIdToReserve);
+        successStatus = false;
         return false;
       }else{
         console.log('about to push:', successCheck,' to : ', newDateState);
         newDateState.kennelReservations.push(successCheck);
       }
+
     }else{ // :::CREATE DATE IN RESERVATIONS
+      
       const successCheck = createReservationsForDate(dateString, petStay, workingReservationsState);
       if(successCheck === false){
-        console.log('SUCCESS CHECK NOT MET IN addPetReservationsState, successCheck: ', successCheck);
+        console.log('SUCCESS CHECK NOT MET IN addPetReservationToDate, successCheck: ', successCheck);
+        successStatus = false;
         return false;
       }else{
         newDateState = successCheck;
       }
+
     }
-    return newDateState;
+
+    if(successStatus !== false){
+      console.log('addPetReservationToDate successStatus: ', successStatus, 'passing on: ', newDateState);
+      return newDateState;
+    } else{
+      console.log('addPetReservationToDate falied. successStatus: ', successStatus);
+      return false;
+    }
   }
 
 
   const processNewPet = (newPet, workingReservationsState)=>{
-    console.log('processNewPet is receiving', newPet);
+    // console.log('processNewPet is receiving', newPet);
     let newDates = generateDatesFromPet(newPet); // :::GENERATE RANGE OF DATES
     let [newReservations, successStatus] = [{}, true];
-    console.log('processNewPet is about to loop over : ', newDates);
+    // console.log('processNewPet is about to loop over : ', newDates);
     Object.keys(newDates).map((dateKey)=>{ // :::FOR EACH DATE IN RANGE
-      console.log('looping through date : ', dateKey,newDates[dateKey]);
+      // console.log('looping through date : ', dateKey,newDates[dateKey]);
       let successCheck = addPetReservationToDate(dateKey, newPet, workingReservationsState);
       if(successCheck === false){
         console.log('SUCCESS CHECK NOT MET IN processNewPet, successCheck: ', successCheck);
-        return false
+        successStatus = false;
+        return false;
+        // return workingReservationsState;
       } else{
         newReservations[dateKey] = successCheck;
       }
     })
-    
-    
-    if(successStatus === true){
-      console.log('processNewPet is returning', newReservations);
+    if(successStatus !== false){
+      // console.log('processNewPet is returning', newReservations);
       return newReservations;
+    }else{
+      return false;
     }
 
   }
@@ -224,44 +239,47 @@ function App() {
   const newGroupStayHandler = (newGroup) =>{
     // console.log('newGroupHandler is receiving : ', newGroup);
     let newReservationsState = dateReservations;
+    let successStatus = true;
+
     Object.keys(newGroup.pets).map((petKey)=>{ // :::FOR EACH PET
-      console.log('pet in group is: ', newGroup.pets[petKey].petName);
+      // console.log('pet in group is: ', newGroup.pets[petKey].petName);
       const successCheck = processNewPet(newGroup.pets[petKey], newReservationsState);
-      if(successCheck === false){
+      if(successCheck == false){
         console.log('SUCCESS CHECK NOT MET IN newGroupStayHandler , successCheck: ', successCheck);
-        return false
+        successStatus = false
       } else{
         newReservationsState = successCheck;
       }
     });
-    addGroupToGroupStays(newGroup);
-    setDateReservations(newReservationsState)
-    console.log('-------------------------');
+
+    if(successStatus === true){
+      console.log('Updating STATE with: ', newReservationsState, successStatus);
+      addGroupToGroupStays(newGroup);
+      setDateReservations(newReservationsState)
+    }else{
+      alert('something went wrong');
+      console.log('DIDNT WORK!!!')
+    }
+    
     console.log('-------------------------');
     console.log('-------------------------');
   }
 
-
-
-
-  const logGroup =()=>{console.log('GroupStays is : ', groupStays)}
-  const logRes =()=>{console.log('Reservations State is : ', dateReservations)}
-
-  const counter = useSelector(state => state.counter);
-  const loggedIn = useSelector(state => state.logged);
-  const dispatch = useDispatch();
+  // const counter = useSelector(state => state.counter);
+  // const loggedIn = useSelector(state => state.logged);
+  // const dispatch = useDispatch();
   return (
     <div className="App">
     
-      <div>
+      {/* <div>
         <h1>Counter = {counter}</h1>
         <button onClick={()=>dispatch(increment(4))}>Increment</button>
         <button onClick={()=>dispatch(decrement())}>Decrement</button>
-      </div>
-      {loggedIn ? <h2>Logged in</h2> : <h2>Not logged in</h2>}
+      </div> */}
+      {/* {loggedIn ? <h2>Logged in</h2> : <h2>Not logged in</h2>} */}
     
-      <button onClick={logGroup}>log groupStays</button>
-      <button onClick={logRes}>log Reservations</button>
+      <button onClick={()=>console.log('GroupStays is : ', groupStays)}>log groupStays</button>
+      <button onClick={()=>console.log('Reservations State is : ', dateReservations)}>log Reservations</button>
 
                                             {/* Maybe pass this into some kind of vaildation before setState() */}
       <AddStayForm passNewGroupStayUpScope={newGroupStayHandler} />
