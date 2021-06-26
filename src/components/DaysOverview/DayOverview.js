@@ -18,7 +18,8 @@ const DayOverview = ({reservationsForDay}) => {
     // console.log( 'SORTED RESERVATIONSZZZ ',sortedReservationsZZZ);
     return (
         <div>
-            <h1>______________________________________</h1>
+            <hr></hr>
+            <br />
             <h2>Date: {reservationsForDay.date}</h2>
             
 

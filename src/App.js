@@ -41,8 +41,8 @@ function App() {
   });
 
   const [dateReservations, setDateReservations] = useState({});
-
   const [groupStays, setGroupStays] = useState({})
+  const [proccessPetErrorState, setproccessPetErrorState] = useState({})
 
   const addGroupToGroupStays = (groupStay)=>{
     let newGroupState = groupStays;
@@ -140,6 +140,9 @@ function App() {
     console.log('Available : ', maxReservationsOfSize,'Taken : ', kennelReservationsOfSize.length);
     if(maxReservationsOfSize <= kennelReservationsOfSize.length){
       console.log('kennel size is full!');
+      // alert('kennel size is full!');
+      const errorStateObj = {proccessPetErrorState, "getFirstAvailableIdOfKennelSize":`Kennel size ${kennelSizeNeeded} is full`}
+      setproccessPetErrorState(errorStateObj);
       return false;
     }else{
       let kennelIdsReserved = [];
@@ -176,22 +179,29 @@ function App() {
       newDateState = workingReservationsState[dateString];
       const kennelIdToReserve = getFirstAvailableIdOfKennelSize(workingReservationsState[dateString], petStay.kennelSize, workingReservationsState);
       const successCheck = createPetReservationForDate(dateString, petStay, kennelIdToReserve);
-      
-      if(successCheck === false || kennelIdToReserve === false){
-        console.log('SUCCESS CHECK NOT MET IN addPetReservationToDate, successCheck: ', successCheck, 'kennelIdToReserve : ', kennelIdToReserve);
-        successStatus = false;
-        return false;
-      }else{
-        console.log('about to push:', successCheck,' to : ', newDateState);
-        newDateState.kennelReservations.push(successCheck);
-      }
 
+      if(successCheck === false){
+        const errorStateObj = {proccessPetErrorState, "addPetReservationToDate":`successCheck = getFirstAvailableIdOfKennelSize() didn't resolve: ${successCheck}`};
+        setproccessPetErrorState(errorStateObj);
+        return false;
+      }
+      if(kennelIdToReserve === false){
+        const errorStateObj = {proccessPetErrorState, "addPetReservationToDate":`kennelIdToReserve = createPetReservationForDate() didn't resolve: ${kennelIdToReserve}`}
+        setproccessPetErrorState(errorStateObj);
+        return false;
+      }
+      
+      // console.log('about to push:', successCheck,' to : ', newDateState);
+      newDateState.kennelReservations.push(successCheck);
+      
     }else{ // :::CREATE DATE IN RESERVATIONS
       
       const successCheck = createReservationsForDate(dateString, petStay, workingReservationsState);
       if(successCheck === false){
         console.log('SUCCESS CHECK NOT MET IN addPetReservationToDate, successCheck: ', successCheck);
         successStatus = false;
+          const errorStateObj = {proccessPetErrorState, "addPetReservationToDate":`successCheck = createReservationsForDate() didn't resolve: ${successCheck}`}
+          setproccessPetErrorState(errorStateObj);
         return false;
       }else{
         newDateState = successCheck;
@@ -204,6 +214,7 @@ function App() {
       return newDateState;
     } else{
       console.log('addPetReservationToDate falied. successStatus: ', successStatus);
+      
       return false;
     }
   }
@@ -220,7 +231,9 @@ function App() {
       if(successCheck === false){
         console.log('SUCCESS CHECK NOT MET IN processNewPet, successCheck: ', successCheck);
         successStatus = false;
-        return false;
+          const errorStateObj = {proccessPetErrorState, "processNewPet":`successCheck = addPetReservationToDate() didn't resolve: ${successCheck}`}
+          setproccessPetErrorState(errorStateObj);
+          return false;
         // return workingReservationsState;
       } else{
         newReservations[dateKey] = successCheck;
@@ -230,6 +243,7 @@ function App() {
       // console.log('processNewPet is returning', newReservations);
       return newReservations;
     }else{
+
       return false;
     }
 
@@ -240,12 +254,14 @@ function App() {
     // console.log('newGroupHandler is receiving : ', newGroup);
     let newReservationsState = dateReservations;
     let successStatus = true;
+    setproccessPetErrorState()
 
     Object.keys(newGroup.pets).map((petKey)=>{ // :::FOR EACH PET
       // console.log('pet in group is: ', newGroup.pets[petKey].petName);
       const successCheck = processNewPet(newGroup.pets[petKey], newReservationsState);
       if(successCheck == false){
         console.log('SUCCESS CHECK NOT MET IN newGroupStayHandler , successCheck: ', successCheck);
+        setproccessPetErrorState({...proccessPetErrorState, "newGroupStayHandler":`successCheck = processNewPet() didn't resolve: ${successCheck}`});
         successStatus = false
       } else{
         newReservationsState = successCheck;
@@ -254,11 +270,16 @@ function App() {
 
     if(successStatus === true){
       console.log('Updating STATE with: ', newReservationsState, successStatus);
+      setproccessPetErrorState({'reset':'successful update'})
       addGroupToGroupStays(newGroup);
       setDateReservations(newReservationsState)
     }else{
-      alert('something went wrong');
-      console.log('DIDNT WORK!!!')
+      // setproccessPetErrorState({proccessPetErrorState,'touched':true})
+      // alert('something went wrong');
+      console.log('DIDNT WORK!!!');
+      console.log('proccessPetErrorState at FAIL :', proccessPetErrorState);
+      // alert( JSON.stringify(proccessPetErrorState, null, 2) );
+      
     }
     
     console.log('-------------------------');
@@ -277,6 +298,12 @@ function App() {
         <button onClick={()=>dispatch(decrement())}>Decrement</button>
       </div> */}
       {/* {loggedIn ? <h2>Logged in</h2> : <h2>Not logged in</h2>} */}
+      {settings.kennelSizes.map((size)=>{
+        return(
+          <p>{size.total} kennels available of size {size.size}</p>
+        )
+      })}
+      {/* <pre>{JSON.stringify(sizesAvailable, null, 2)}</pre> */}
     
       <button onClick={()=>console.log('GroupStays is : ', groupStays)}>log groupStays</button>
       <button onClick={()=>console.log('Reservations State is : ', dateReservations)}>log Reservations</button>
@@ -284,6 +311,7 @@ function App() {
                                             {/* Maybe pass this into some kind of vaildation before setState() */}
       <AddStayForm passNewGroupStayUpScope={newGroupStayHandler} />
       {/* <pre>{JSON.stringify(dateReservations, null, 2)}</pre> */}
+      <pre>{JSON.stringify(proccessPetErrorState, null, 2)}</pre>
 
       {/* <CurrentStayInfo currentStayDetails={currentStayDetails} /> */}
       <DaysOverview reservations={dateReservations} />
