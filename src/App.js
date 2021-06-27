@@ -285,7 +285,6 @@ function App() {
       // setDateReservations(newNewState);
     }else{
       // alert('something went wrong');
-      // console.log('DIDNT WORK!!!');
       console.log('proccessPetErrorState at FAIL :', proccessPetErrorState);
       // alert( JSON.stringify(proccessPetErrorState, null, 2) );
       

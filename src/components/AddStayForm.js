@@ -72,7 +72,7 @@ const AddStayForm = ({passNewGroupStayUpScope}) => {
                     {/* {console.log('petStay is : ', addStayFormStayState.pets[petStayLabel])} */}
                     return <div key={petStayLabel} className="addStayForm_petStay-container">
 
-                    <button data-formkey={petStayLabel} onClick={(e)=>{removePetStayInput(e)}}>Remove</button>
+                    <button data-formkey={petStayLabel} onClick={(e)=>{removePetStayInput(e)}} style={{backgroundColor:"hsl(0,100%,80%)", padding:"0.5em"}} >Remove</button>
 
                         <div className="addStayForm_inputWrapper">
                             <label htmlFor="addStay-petName">Pet Name</label>

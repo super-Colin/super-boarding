@@ -98,6 +98,7 @@ html{
   align-items: center;
   justify-content: space-around;
   padding-top: 1rem;
+  background-color: hsl(0, 0%, 90%);
   /* margin-bottom: 1rem; */
 }
 .addStayForm_petStay-container hr {
@@ -106,7 +107,7 @@ html{
   margin-top: 1rem;
 }
 .addStayForm_petStay-container:nth-child(even){
-  background-color: lightgray;
+  background-color: hsl(0, 0%, 80%);
 }
 
 .addStayForm_addAnotherPet-container{
