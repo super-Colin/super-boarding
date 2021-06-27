@@ -1,0 +1,22 @@
+{
+  "files": {
+    "main.css": "/super-boarding/static/css/main.3b428fc6.chunk.css",
+    "main.js": "/super-boarding/static/js/main.c04ec6b0.chunk.js",
+    "main.js.map": "/super-boarding/static/js/main.c04ec6b0.chunk.js.map",
+    "runtime-main.js": "/super-boarding/static/js/runtime-main.9c53afc5.js",
+    "runtime-main.js.map": "/super-boarding/static/js/runtime-main.9c53afc5.js.map",
+    "static/js/2.0e1e3f61.chunk.js": "/super-boarding/static/js/2.0e1e3f61.chunk.js",
+    "static/js/2.0e1e3f61.chunk.js.map": "/super-boarding/static/js/2.0e1e3f61.chunk.js.map",
+    "static/js/3.f6a1ecbb.chunk.js": "/super-boarding/static/js/3.f6a1ecbb.chunk.js",
+    "static/js/3.f6a1ecbb.chunk.js.map": "/super-boarding/static/js/3.f6a1ecbb.chunk.js.map",
+    "index.html": "/super-boarding/index.html",
+    "static/css/main.3b428fc6.chunk.css.map": "/super-boarding/static/css/main.3b428fc6.chunk.css.map",
+    "static/js/2.0e1e3f61.chunk.js.LICENSE.txt": "/super-boarding/static/js/2.0e1e3f61.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.9c53afc5.js",
+    "static/js/2.0e1e3f61.chunk.js",
+    "static/css/main.3b428fc6.chunk.css",
+    "static/js/main.c04ec6b0.chunk.js"
+  ]
+}
