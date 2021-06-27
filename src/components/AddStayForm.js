@@ -53,80 +53,78 @@ const AddStayForm = ({passNewGroupStayUpScope}) => {
         <form className="addStayForm_container" onSubmit={(e)=>e.preventDefault()}>
             <h1>Add Stay</h1>
             
-            <div className="addStayForm_inputWrapper">
-                <label htmlFor="addStay-groupName">Group Name</label>
-                <input required id="addStay-groupName" type="text" minLength="4" name="groupName" value={addStayFormStayState.groupName} onChange={(e)=> updateGroupState(e) } />
-            </div>
-
-            <div className="addStayForm_inputWrapper">
-                <label htmlFor="addStay-groupNotes">Group Notes</label>
-                <br />
-                <textarea required id="addStay-groupNotes" type="text" minLength="4" name="groupNotes" value={addStayFormStayState.groupNotes} onChange={(e)=> updateGroupState(e) } />
-            </div>
-            <br />
-
-
-
-            {Object.keys(addStayFormStayState.pets).map((petStayLabel)=>{
-
-                {/* {console.log('petStay is : ', addStayFormStayState.pets[petStayLabel])} */}
-                return <div key={petStayLabel} className="addStayForm_petStay-container">
-
-                <button data-formkey={petStayLabel} onClick={(e)=>{removePetStayInput(e)}}>Remove</button>
-
-                    <div className="addStayForm_inputWrapper">
-                        <label htmlFor="addStay-petName">Pet Name</label>
-                        <input required name="petName" data-formkey={petStayLabel} type="text" minLength="2" value={addStayFormStayState.pets[petStayLabel].petName} onChange={(e)=> updatePetState(e)} />
-                    </div>
-
-                    <div className="addStayForm_inputWrapper">
-                        <label htmlFor="addStay-arrivalDate">Arrival Date</label>
-                        <input required name="arrivalDate" data-formkey={petStayLabel} type="date" data-formkey={petStayLabel} value={addStayFormStayState.pets[petStayLabel].arrivalDate} onChange={(e)=> updatePetState(e)} />
-
-                        <label htmlFor="addStay-arrivalTime">Arrival Time</label>
-                        <input required name="arrivalTime" data-formkey={petStayLabel} type="time" data-formkey={petStayLabel} value={addStayFormStayState.pets[petStayLabel].arrivalTime} onChange={(e)=> updatePetState(e)} />
-                    </div>
-                    <br />
-
-                    <div className="addStayForm_inputWrapper">
-                        <label htmlFor="releaseDate">Release Date</label>
-                        <input required name="releaseDate" data-formkey={petStayLabel} type="date" value={addStayFormStayState.pets[petStayLabel].releaseDate} onChange={(e)=> updatePetState(e)}  />
-
-                        <label htmlFor="releaseTime">Release Time</label>
-                        <input required name="releaseTime" data-formkey={petStayLabel} type="time" value={addStayFormStayState.pets[petStayLabel].releaseTime} onChange={(e)=> updatePetState(e)} />
-                    </div>
-                    <br />
-
-                    <div className="addStayForm_inputWrapper">
-                        <label htmlFor="addStay-kennelSize">Kennel Size</label>
-                        <br />
-                        <select required name="kennelSize"  data-formkey={petStayLabel} value={addStayFormStayState.pets[petStayLabel].kennelSize} onChange={(e)=> updatePetState(e)} >
-                            <option value="small">Small</option>
-                            <option value="medium">Medium</option>
-                            <option value="large">Large</option>
-                        </select>
-                    </div>
-
-
-                    <div className="addStayForm_inputWrapper">
-                        <label htmlFor="addStay-petNotes">Pet Notes</label>
-                        <br />
-                        <textarea  name="notes" data-formkey={petStayLabel} value={addStayFormStayState.pets[petStayLabel].notes} onChange={(e)=> updatePetState(e)} placeholder="Notes, medical or otherwise" />
-                    </div>
-                    <br />
-
+            <div className="addStayForm_groupInfo-container">
+                <div className="addStayForm_inputWrapper">
+                    <label htmlFor="addStay-groupName">Group Name</label>
+                    <input required id="addStay-groupName" type="text" minLength="4" name="groupName" value={addStayFormStayState.groupName} onChange={(e)=> updateGroupState(e) } />
                 </div>
-                {/* /petStay form wrapper */}
-            })}
 
-            <br />
-            <button onClick={increasePetStayInputs}>Add Another Pet</button>
+                <div className="addStayForm_inputWrapper">
+                    <label htmlFor="addStay-groupNotes">Group Notes</label>
+                    <textarea required id="addStay-groupNotes" type="text" minLength="4" name="groupNotes" value={addStayFormStayState.groupNotes} onChange={(e)=> updateGroupState(e) } />
+                </div>
+            </div>
 
-            <br />
-            {/* <button formAction="submit">Submit</button> */}
-            <button onClick={addStaySubmitHandler}>Submit</button>
-            {/* <pre>{JSON.stringify(addStayFormStayState, null, 2)}</pre> */}
-            <br /><br /><hr /><br /><hr /><br />
+            <div className="addStayForm_addPetForms-container">
+
+                {Object.keys(addStayFormStayState.pets).map((petStayLabel)=>{
+
+                    {/* {console.log('petStay is : ', addStayFormStayState.pets[petStayLabel])} */}
+                    return <div key={petStayLabel} className="addStayForm_petStay-container">
+
+                    <button data-formkey={petStayLabel} onClick={(e)=>{removePetStayInput(e)}}>Remove</button>
+
+                        <div className="addStayForm_inputWrapper">
+                            <label htmlFor="addStay-petName">Pet Name</label>
+                            <input required name="petName" data-formkey={petStayLabel} type="text" minLength="2" value={addStayFormStayState.pets[petStayLabel].petName} onChange={(e)=> updatePetState(e)} />
+                        </div>
+
+                        <div className="addStayForm_inputWrapper">
+                            <label htmlFor="addStay-arrivalDate">Arrival Date</label>
+                            <input required name="arrivalDate" data-formkey={petStayLabel} type="date" data-formkey={petStayLabel} value={addStayFormStayState.pets[petStayLabel].arrivalDate} onChange={(e)=> updatePetState(e)} />
+
+                            <label htmlFor="addStay-arrivalTime">Arrival Time</label>
+                            <input required name="arrivalTime" data-formkey={petStayLabel} type="time" data-formkey={petStayLabel} value={addStayFormStayState.pets[petStayLabel].arrivalTime} onChange={(e)=> updatePetState(e)} />
+                        </div>
+                        <br />
+
+                        <div className="addStayForm_inputWrapper">
+                            <label htmlFor="releaseDate">Release Date</label>
+                            <input required name="releaseDate" data-formkey={petStayLabel} type="date" value={addStayFormStayState.pets[petStayLabel].releaseDate} onChange={(e)=> updatePetState(e)}  />
+
+                            <label htmlFor="releaseTime">Release Time</label>
+                            <input required name="releaseTime" data-formkey={petStayLabel} type="time" value={addStayFormStayState.pets[petStayLabel].releaseTime} onChange={(e)=> updatePetState(e)} />
+                        </div>
+                        <br />
+
+                        <div className="addStayForm_inputWrapper">
+                            <label htmlFor="addStay-kennelSize">Kennel Size</label>
+                            <br />
+                            <select required name="kennelSize"  data-formkey={petStayLabel} value={addStayFormStayState.pets[petStayLabel].kennelSize} onChange={(e)=> updatePetState(e)} >
+                                <option value="small">Small</option>
+                                <option value="medium">Medium</option>
+                                <option value="large">Large</option>
+                            </select>
+                        </div>
+
+
+                        <div className="addStayForm_inputWrapper">
+                            <label htmlFor="addStay-petNotes">Pet Notes</label>
+                            <br />
+                            <textarea  name="notes" data-formkey={petStayLabel} value={addStayFormStayState.pets[petStayLabel].notes} onChange={(e)=> updatePetState(e)} placeholder="Notes, medical or otherwise" />
+                        </div>
+                        <hr />
+                        
+
+
+                    </div>
+                    {/* /petStay form wrapper */}
+                })}
+            </div>
+            <div className="addStayForm_addAnotherPet-container">
+                <button onClick={increasePetStayInputs}>Add Another Pet</button>
+                <button onClick={addStaySubmitHandler}>Submit</button>
+            </div>
         </form>
     )
 }

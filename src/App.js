@@ -92,7 +92,7 @@ function App() {
       // console.log('looping through adding days', workingDay, releaseDay);
       // we CANNOT use the == operator an object! it will always return false
       if(releaseDay >= workingDay && releaseDay <= workingDay) { 
-        console.log('working day is release day');
+        // console.log('working day is release day');
         onEndDay = true;
       }
       datesForStay[formatDateString(workingDay)] = {"date": formatDateString(workingDay)};
@@ -135,13 +135,11 @@ function App() {
   }
 
   const getFirstAvailableIdOfKennelSize = (workingDateReservationsObject, kennelSizeNeeded)=>{
-    console.log('getFirstAvailable is working with state :', workingDateReservationsObject);
+    // console.log('getFirstAvailable is working with state :', workingDateReservationsObject);
     const maxReservationsOfSize = workingDateReservationsObject[kennelSizeNeeded + 'Total'];
     const kennelReservationsOfSize = workingDateReservationsObject.kennelReservations.filter( reservation => reservation.kennelSize == kennelSizeNeeded );
-    console.log('Available : ', maxReservationsOfSize,'Taken : ', kennelReservationsOfSize.length);
+    // console.log('Available : ', maxReservationsOfSize,'Taken : ', kennelReservationsOfSize.length);
     if(maxReservationsOfSize <= kennelReservationsOfSize.length){
-      console.log('kennel size is full!');
-      // alert('kennel size is full!');
       
       let errorObj = {}
       if(proccessPetErrorState.getFirstAvailableIdOfKennelSize){
@@ -160,7 +158,7 @@ function App() {
       if(kennelIdsReserved.length == 0){kennelIdsReserved.push(0)}
       // console.log('reserved Ids : ', kennelIdsReserved);
       let idToReserve = findFirstMissingNumber(kennelIdsReserved, 0, 1, maxReservationsOfSize);
-      console.log('next Id to reserve is: ', idToReserve);
+      // console.log('next Id to reserve is: ', idToReserve);
       return idToReserve;
     }
   }
@@ -188,11 +186,12 @@ function App() {
       const kennelIdToReserve = getFirstAvailableIdOfKennelSize(workingReservationsState[dateString], petStay.kennelSize, workingReservationsState);
       if(kennelIdToReserve === false){
         proccessPetErrorState = {...proccessPetErrorState, "addPetReservationToDate":`kennelIdToReserve = createPetReservationForDate() didn't resolve: ${kennelIdToReserve}`}
+        successStatus = false;
         return false;
       }
 
       const successCheck = createPetReservationForDate(dateString, petStay, kennelIdToReserve);
-      if(successCheck === false){
+      if(successCheck === true){
         proccessPetErrorState = {...proccessPetErrorState, "addPetReservationToDate":`successCheck = getFirstAvailableIdOfKennelSize() didn't resolve: ${successCheck}`};
         return false;
       }
@@ -245,8 +244,9 @@ function App() {
       }
     })
     if(successStatus !== false){
-      // console.log('processNewPet is returning', newReservations);
+      console.log('processNewPet is returning', newReservations);
       return newReservations;
+      // return orderKennelReservationsArrayBySize(newReservations);
     }else{
       return false;
     }
@@ -277,17 +277,62 @@ function App() {
       console.log('Updating STATE with: ', newReservationsState, successStatus);
       proccessPetErrorState = {'reset':'successful update'}
       addGroupToGroupStays(newGroup);
-      setDateReservations(newReservationsState)
+      const newNewState = {...dateReservations, ...newReservationsState};
+      const sortedReservationsState = sortDateObject(newNewState);
+      // console.log('newNewState is : ', sortedReservationsState);
+      console.log('sortedReservationsState is : ', sortedReservationsState);
+      setDateReservations(sortedReservationsState);
+      // setDateReservations(newNewState);
     }else{
       // alert('something went wrong');
-      console.log('DIDNT WORK!!!');
+      // console.log('DIDNT WORK!!!');
       console.log('proccessPetErrorState at FAIL :', proccessPetErrorState);
       // alert( JSON.stringify(proccessPetErrorState, null, 2) );
       
     }
-      setErrorLog(proccessPetErrorState)
+    setErrorLog(proccessPetErrorState)
     console.log('-------------------------');
     console.log('-------------------------');
+  }
+
+  // function sortObject(obj){ return Object.keys(obj).sort().reduce( (accumulator, key)=> accumulator[key] = obj[key] ,{})};
+  function sortObject(obj) {
+    return Object.keys(obj).sort().reduce( 
+      (result, key)=> {
+        result[key] = obj[key];
+        return result;
+      },
+    {});
+  }
+  //V Will sort according to how they sizes are ordered in the settings
+  function orderKennelReservationsArrayBySize(reservationsArr) {
+    console.log('Sorted KennelSizes receiving', reservationsArr);
+    let sortedSizesObject = {};
+    settings.kennelSizes.forEach(
+      (kennelSizeSetting)=>{sortedSizesObject[kennelSizeSetting.size] = []} 
+    );
+    // reservationsArr.forEach((reservationForDay)=>{sortedSizesObject[reservationForDay.kennelSize].push(reservationForDay)});
+    for( let reservationForDay in reservationsArr){
+      console.log( 'RESERVATIONS SIZE',sortedSizesObject[ reservationsArr[reservationForDay].kennelSize ], reservationForDay)
+      sortedSizesObject[reservationForDay].kennelSize.push(reservationForDay)
+    }
+    //Should have and object in the form of {"small":[{},{}], "medium":[{},{}]...} for all sizes
+    let sortedArr = [];
+    for(let reservationsArrayOfSize in sortedSizesObject){
+      sortedArr.push(...reservationsArrayOfSize)
+    }
+    console.log('Sorted KennelSizes returning', sortedArr);
+    return sortedArr;
+  }
+  function sortDateObject(obj) {
+    return  Object.keys(obj).sort(
+      (a,b)=>{return new Date(a) - new Date(b);}
+    ).reduce( 
+      (result, key)=> {
+        result[key] = obj[key];
+        return result;
+      },
+    {});
   }
 
   // const counter = useSelector(state => state.counter);
@@ -307,19 +352,21 @@ function App() {
           <p>{size.total} kennels available of size {size.size}</p>
         )
       })}
+      <hr />
+      <pre stlye="background-color:lightred">{JSON.stringify(errorLog, null, 2)}</pre>
+      <hr />
       {/* <pre>{JSON.stringify(sizesAvailable, null, 2)}</pre> */}
     
-      <button onClick={()=>console.log('GroupStays is : ', groupStays)}>log groupStays</button>
-      <button onClick={()=>console.log('Reservations State is : ', dateReservations)}>log Reservations</button>
+      {/* <button onClick={()=>console.log('GroupStays is : ', groupStays)}>log groupStays</button>
+      <button onClick={()=>console.log('Reservations State is : ', dateReservations)}>log Reservations</button> */}
 
                                             {/* Maybe pass this into some kind of vaildation before setState() */}
       <AddStayForm passNewGroupStayUpScope={newGroupStayHandler} />
-      {/* <pre>{JSON.stringify(dateReservations, null, 2)}</pre> */}
-      {/* <pre>{JSON.stringify(proccessPetErrorState, null, 2)}</pre> */}
-      <pre>{JSON.stringify(errorLog, null, 2)}</pre>
+      <hr />
 
       {/* <CurrentStayInfo currentStayDetails={currentStayDetails} /> */}
       <DaysOverview reservations={dateReservations} />
+
       
     </div>
   );
