@@ -138,17 +138,15 @@ function App() {
     // console.log('getFirstAvailable is working with state :', workingDateReservationsObject);
     const maxReservationsOfSize = workingDateReservationsObject[kennelSizeNeeded + 'Total'];
     const kennelReservationsOfSize = workingDateReservationsObject.kennelReservations.filter( reservation => reservation.kennelSize == kennelSizeNeeded );
-    // console.log('Available : ', maxReservationsOfSize,'Taken : ', kennelReservationsOfSize.length);
+    console.log( kennelSizeNeeded, 'Available : ', maxReservationsOfSize,'Taken : ', kennelReservationsOfSize.length);
     if(maxReservationsOfSize <= kennelReservationsOfSize.length){
       
-      let errorObj = {}
       if(proccessPetErrorState.getFirstAvailableIdOfKennelSize){
-        errorObj = {...proccessPetErrorState, "getFirstAvailableIdOfKennelSize": [ ...proccessPetErrorState.getFirstAvailableIdOfKennelSize,`Kennel size ${kennelSizeNeeded} is full on ${workingDateReservationsObject.date}`]}
+        proccessPetErrorState = {...proccessPetErrorState, "getFirstAvailableIdOfKennelSize": [ ...proccessPetErrorState.getFirstAvailableIdOfKennelSize,`Kennel size ${kennelSizeNeeded} is full on ${workingDateReservationsObject.date}`]}
       }else{
-        errorObj = {...proccessPetErrorState, "getFirstAvailableIdOfKennelSize": [ `Kennel size ${kennelSizeNeeded} is full on ${workingDateReservationsObject.date}`]}
+        proccessPetErrorState = {...proccessPetErrorState, "getFirstAvailableIdOfKennelSize": [ `Kennel size ${kennelSizeNeeded} is full on ${workingDateReservationsObject.date}`]}
       }
-      proccessPetErrorState = errorObj
-      
+      console.log('getFirstAvailableIdOfKennelSize is returning FALSE');
       return false;
     }else{
       let kennelIdsReserved = [];
@@ -193,6 +191,7 @@ function App() {
       const successCheck = createPetReservationForDate(dateString, petStay, kennelIdToReserve);
       if(successCheck === true){
         proccessPetErrorState = {...proccessPetErrorState, "addPetReservationToDate":`successCheck = getFirstAvailableIdOfKennelSize() didn't resolve: ${successCheck}`};
+        // successStatus = false;
         return false;
       }
       
@@ -205,8 +204,7 @@ function App() {
       if(successCheck === false){
         console.log('SUCCESS CHECK NOT MET IN addPetReservationToDate, successCheck: ', successCheck);
         successStatus = false;
-          proccessPetErrorState = {...proccessPetErrorState, "addPetReservationToDate":`successCheck = createReservationsForDate() didn't resolve: ${successCheck}`}
-          
+        proccessPetErrorState = {...proccessPetErrorState, "addPetReservationToDate":`successCheck = createReservationsForDate() didn't resolve: ${successCheck}`}
         return false;
       }else{
         newDateState = successCheck;
@@ -219,7 +217,7 @@ function App() {
       return newDateState;
     } else{
       console.log('addPetReservationToDate falied. successStatus: ', successStatus);
-      
+      console.log('addPetReservationToDate is returning FALSE');
       return false;
     }
   }
@@ -228,7 +226,8 @@ function App() {
   const processNewPet = (newPet, workingReservationsState)=>{
     // console.log('processNewPet is receiving', newPet);
     let newDates = generateDatesFromPet(newPet); // :::GENERATE RANGE OF DATES
-    let [newReservations, successStatus] = [{}, true];
+    let newReservations= {};
+    let successStatus = true;
     // console.log('processNewPet is about to loop over : ', newDates);
     Object.keys(newDates).map((dateKey)=>{ // :::FOR EACH DATE IN RANGE
       // console.log('looping through date : ', dateKey,newDates[dateKey]);
@@ -243,11 +242,12 @@ function App() {
         newReservations[dateKey] = successCheck;
       }
     })
-    if(successStatus !== false){
+    if(successStatus === true){
       console.log('processNewPet is returning', newReservations);
       return newReservations;
       // return orderKennelReservationsArrayBySize(newReservations);
     }else{
+      console.log('processNewPet is returning FALSE');
       return false;
     }
 
@@ -256,42 +256,54 @@ function App() {
 
   const newGroupStayHandler = (newGroup) =>{
     // console.log('newGroupHandler is receiving : ', newGroup);
-    let newReservationsState = dateReservations;
-    let successStatus = '';
-    proccessPetErrorState = {}
+    let reservationsState = dateReservations;
+    let newReservationsState = reservationsState;
+    let successStatus = true;
+    let sortedReservationsState = '';
+    // let proccessPetErrorState = {};
 
     Object.keys(newGroup.pets).map((petKey)=>{ // :::FOR EACH PET
       // console.log('pet in group is: ', newGroup.pets[petKey].petName);
       const successCheck = processNewPet(newGroup.pets[petKey], newReservationsState);
-      if(successCheck == false){
+      if(successCheck === false || successStatus === false){
         console.log('SUCCESS CHECK NOT MET IN newGroupStayHandler , successCheck: ', successCheck);
         proccessPetErrorState = {...proccessPetErrorState, "newGroupStayHandler":`successCheck = processNewPet() didn't resolve: ${successCheck}`};
-        successStatus = false
+        successStatus = false;
+        return false;
       } else{
         newReservationsState = successCheck;
-        successStatus = true;
       }
     });
 
     if(successStatus === true){
       console.log('Updating STATE with: ', newReservationsState, successStatus);
-      proccessPetErrorState = {'reset':'successful update'}
-      addGroupToGroupStays(newGroup);
       const newNewState = {...dateReservations, ...newReservationsState};
-      const sortedReservationsState = sortDateObject(newNewState);
-      // console.log('newNewState is : ', sortedReservationsState);
-      console.log('sortedReservationsState is : ', sortedReservationsState);
-      setDateReservations(sortedReservationsState);
-      // setDateReservations(newNewState);
+      sortedReservationsState = sortDateObject(newNewState);
     }else{
       // alert('something went wrong');
+      console.log('proccessPetErrorState at FAIL :', successStatus);
       console.log('proccessPetErrorState at FAIL :', proccessPetErrorState);
-      // alert( JSON.stringify(proccessPetErrorState, null, 2) );
-      
+      successStatus = false;
+      setErrorLog(proccessPetErrorState);
+      return false
     }
-    setErrorLog(proccessPetErrorState)
+
+    if(successStatus === true){ // needed to check again.. for async reasons I think
+      console.log('-------');
+      console.log('proccessPetErrorState at SUCCESS :', successStatus);
+      addGroupToGroupStays(newGroup);
+      setDateReservations(sortedReservationsState);
+      proccessPetErrorState = {'reset':'successful update'}
+      console.log('proccessPetErrorState at SUCCESS :', successStatus);
+      console.log('-------');
+      // setErrorLog(proccessPetErrorState);
+    }else{
+      // setErrorLog(proccessPetErrorState);
+    }
+      setErrorLog(proccessPetErrorState);
     console.log('-------------------------');
     console.log('-------------------------');
+
   }
 
   // function sortObject(obj){ return Object.keys(obj).sort().reduce( (accumulator, key)=> accumulator[key] = obj[key] ,{})};
@@ -348,7 +360,7 @@ function App() {
       {/* {loggedIn ? <h2>Logged in</h2> : <h2>Not logged in</h2>} */}
       {settings.kennelSizes.map((size)=>{
         return(
-          <p>{size.total} kennels available of size {size.size}</p>
+          <p>Set to total: {size.total} of size {size.size} in settings</p>
         )
       })}
       <hr />
@@ -357,7 +369,9 @@ function App() {
       {/* <pre>{JSON.stringify(sizesAvailable, null, 2)}</pre> */}
     
       {/* <button onClick={()=>console.log('GroupStays is : ', groupStays)}>log groupStays</button>
-      <button onClick={()=>console.log('Reservations State is : ', dateReservations)}>log Reservations</button> */}
+      <button onClick={()=>console.log('Reservations State is : ', dateReservations)}>log Reservations</button> */
+      //console.log('settings dump', [...settings.kennelSizes])}
+      console.log('settings dump', settings )}
 
                                             {/* Maybe pass this into some kind of vaildation before setState() */}
       <AddStayForm passNewGroupStayUpScope={newGroupStayHandler} />

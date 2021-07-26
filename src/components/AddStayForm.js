@@ -1,6 +1,10 @@
 import {useState} from 'react';
 
-const AddStayForm = ({passNewGroupStayUpScope}) => {
+const AddStayForm = ({passNewGroupStayUpScope}, {kennelSizes} ) => {
+    const kennelSizesArr = kennelSizes;
+    console.log('addStayForm form sizes is: ', kennelSizes);
+    console.log('addStayForm form sizes is: ', passNewGroupStayUpScope);
+
     const boilerplatePetDetails = {
         // "formKey": 1,2,3..
         "petName": "Mr. Kitty",
@@ -47,6 +51,7 @@ const AddStayForm = ({passNewGroupStayUpScope}) => {
         e.preventDefault();
         console.log('addForm is passing up:', addStayFormStayState);
         passNewGroupStayUpScope(addStayFormStayState);
+        console.log('-------- addForm is done --------');
     }
 
     return (
@@ -103,7 +108,11 @@ const AddStayForm = ({passNewGroupStayUpScope}) => {
                             <select required name="kennelSize"  data-formkey={petStayLabel} value={addStayFormStayState.pets[petStayLabel].kennelSize} onChange={(e)=> updatePetState(e)} >
                                 <option value="small">Small</option>
                                 <option value="medium">Medium</option>
-                                <option value="large">Large</option>
+                                <option value="large">Large</option> 
+                                {/* console.log('sizesArray is', kennelSizesArr)}
+                                {kennelSizesArr.map((kennelSizeSetting)=>{
+                                    return <option key={kennelSizeSetting.size} value={kennelSizeSetting.size} >{kennelSizeSetting.size}</option>
+                                })} */}
                             </select>
                         </div>
 
